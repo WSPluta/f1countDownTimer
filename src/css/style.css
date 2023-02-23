@@ -1,0 +1,92 @@
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{overflow: hidden;}
+body{
+/* height: 100v; */
+  display: flex;
+  flex-direction: row;
+}
+.background{
+    height: 100vh;
+    position: absolute;
+    background: linear-gradient(
+    hsl(227, 50%, 28%),
+    hsla(227, 50%, 28%, 0.91));
+    width: 100%;
+    z-index: -1;
+
+}
+.container{
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0  3rem;
+    position: relative;
+    justify-content: space-around;
+    height: 50vh;
+}
+
+.heading{
+    padding: 1rem 0rem;
+    text-align: center;
+    font-size: 1.3rem;
+
+}
+
+.heading h1{
+    color: white;
+    font-weight: lighter;
+    letter-spacing: 3px;
+    cursor: pointer;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -moz-text-fill-color:transparent;
+    
+}
+
+
+.countdown-wrapper{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+
+}
+
+
+.card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.countdown-font{
+    display: flex;
+    background: linear-gradient(hsla(235, 16%, 15%, 0.218) 50%,
+    hsla(237, 22%, 20%, 0.149)50%);
+    height: 90px;
+    width: 80px;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 2px 4px 3px rgba(0,0,0,0.377);
+    border-radius: 10px;
+    z-index: 44;
+    position: relative;
+    transition: all .4s ease-in;
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+.text{
+    font-size: 2.3rem;
+    color: hsl(0, 0%, 100%);
+    cursor: pointer;
+    transition: all .4s ease-in;
+}
