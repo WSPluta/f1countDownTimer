@@ -1,4 +1,3 @@
-var daysHead = document.querySelector('.days');
 var hourHead = document.querySelector('.hours');
 var minuteHead = document.querySelector('.minutes');
 var secondHead = document.querySelector('.seconds');
@@ -6,7 +5,7 @@ var secondCard = document.querySelector('#second');
 var minuteCard = document.querySelector('#minute');
 var hourCard = document.querySelector('#hour');
 
-let days;
+
 let hours;
 let minutes;
 let seconds;
@@ -26,12 +25,9 @@ var now = new Date().getTime();
 var distance = countDownDate - now;
 
 // time calculations for days , hours, minutes , and seconds
-days = Math.floor(distance/(1000*60*60*24));
 hours = Math.floor((distance % (1000*60*60*24))/(1000*60*60));
 minutes = Math.floor((distance % (1000*60*60))/(1000*60));
 seconds= Math.floor((distance % (1000*60))/(1000));
-
-daysHead.innerHTML = days;
 hourHead.innerHTML = hours;
 minuteHead.innerHTML = minutes;
 secondHead.innerHTML = seconds;
@@ -41,7 +37,6 @@ secondCard.classList.add('active');
 
 // if countdown is over
 if(distance<0){
-daysHead.innerText = "EX";
 hourHead.innerText = "PI";
 minuteHead.innerText = 'R';
 secondHead.innerText = 'ED';
@@ -57,7 +52,6 @@ var now = new Date().getTime();
 var distance = countDownDate-now;
 
 //time calculations for days, hours, minutes and seconds
-days = Math.floor(distance/(1000*60*60*24));
 hours = Math.floor((distance % (1000*60*60*24))/(1000*60*60));
 minutes = Math.floor((distance % (1000*60*60))/(1000*60));
 seconds= Math.floor((distance % (1000*60))/(1000));
@@ -69,7 +63,10 @@ var a =  setInterval(function() {
 var b =  setInterval(function() {
     if (minutes<1) {hourCard.classList.toggle('active')}
 }, 1000);
+document.getElementById("Countdown").innerHTML = (countDownDate);
 
-
-
-
+function currentTimeF() {
+    var today = new Date();
+    var time = today.getHours() + ":" + today.getMinutes();
+    document.getElementById("Countdown").innerHTML = time;
+  }

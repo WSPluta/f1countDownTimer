@@ -5,29 +5,35 @@
     Description:
         This is where any of your application specific styles should be included
 */
-.demo-oracle-icon {
-    width:137px;
-    height:18px
+.demo-tag-icon {
+    width:150px;
+    height:150px;
 }
 
-.demo-oracle-icon:before {
+.demo-tag-icon:before {
+    content:url("images/TAG_Heuer_Logo.svg")
+}
+
+/* .demo-oracle-icon:before {
     content:url("images/oracle_logo.svg")
+} */
+
+html:not([dir="rtl"]) .demo-tag-icon {
+    /* padding-right:4px; */
+    padding-top: 4px
 }
 
-html:not([dir="rtl"]) .demo-oracle-icon {
-    padding-right:4px
+html[dir="rtl"] .demo-tag-icon {
+    /* padding-left:4px; */
+    padding-top: 4px
 }
 
-html[dir="rtl"] .demo-oracle-icon {
-    padding-left:4px
-}
-
-.demo-oracle-icon:before {
+.demo-tag-icon:before {
     display:inline
 }
 
 .demo-appheader-avatar {
-    width:24px;
+    /* width:24px; */
     height:24px
 }
 

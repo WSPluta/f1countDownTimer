@@ -56,34 +56,7 @@
          ** and the CSS documentation under Support/API Docs/Non-Component Styling
          ** on the JET website for more information on how to use this pattern.
       -->
-    <header role="banner" class="oj-web-applayout-header">
-      <div class="oj-web-applayout-max-width oj-flex-bar oj-sm-align-items-center">
-        <div class="oj-flex-bar-middle oj-sm-align-items-baseline">
-          <span role="img" class="oj-icon demo-oracle-icon" title="Oracle Logo" alt="Oracle Logo"></span>
-          <h1 class="oj-sm-only-hide oj-web-applayout-header-title" title="Application Name">
-            <oj-bind-text value="[[appName]]"></oj-bind-text>
-          </h1>
-        </div>
-        <div class="oj-flex-bar-end">
-          <!-- Responsive Toolbar -->
-          <oj-toolbar>
-            <oj-menu-button id="userMenu" display="[[smScreen() ? 'icons' : 'all']]" chroming="borderless">
-              <span>
-                <oj-bind-text value="[[userLogin]]"></oj-bind-text>
-              </span>
-              <span slot="endIcon"
-                :class="[[{'oj-icon demo-appheader-avatar': smScreen(), 'oj-component-icon oj-button-menu-dropdown-icon': !smScreen()}]]"></span>
-              <oj-menu id="menu1" slot="menu">
-                <oj-option id="pref" value="pref">Preferences</oj-option>
-                <oj-option id="help" value="help">Help</oj-option>
-                <oj-option id="about" value="about">About</oj-option>
-                <oj-option id="out" value="out">Sign Out</oj-option>
-              </oj-menu>
-            </oj-menu-button>
-          </oj-toolbar>
-        </div>
-      </div>
-    </header>
+
     <div role="main" class="oj-web-applayout-max-width oj-web-applayout-content">
       <!-- Place your page content here -->
 
@@ -92,23 +65,16 @@
       <head>
 
       </head>
-      <body>
+      <body onload="currentTimeF()">
         <div class="background">
-          <div class="stars"></div>
-          <div class="hills"></div>
         </div>
           <main class="container">
           <div class="heading">
-            <h1>Countdown</h1>
+            <span role="img" class="oj-icon demo-tag-icon" title="Oracle Logo" alt="Oracle Logo"></span>
+            <p class="description">Current Time <span id="Countdown"></span></p>
           </div>
           <div class="countdown-wrapper">
             <div class="card">
-              <div class="countdown-font">
-                <h2 class="text days">08</h2>
-              </div>
-              <h3 class="description">DAYS</h3>
-            </div>
-            <div class="card ">
               <div class="countdown-font" id="hour">
                 <h2 class="text hours">23</h2>
               </div>
