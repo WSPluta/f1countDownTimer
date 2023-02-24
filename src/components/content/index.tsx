@@ -8,7 +8,7 @@ import "ojs/ojformlayout";
 import "ojs/ojinputtext";
 
 export function Content() {
-  const [eventTime, setEventTime] = useState<Date>(new Date('02/23/2023 19:50:59'));
+  const [eventTime, setEventTime] = useState<Date>(new Date('02/24/2023 19:50:59'));
   const [name, setName] = useState<string>("Event Name");
   const [endOpened, setEndOpened] = useState<boolean>(false);
 
@@ -21,19 +21,20 @@ export function Content() {
   };
 
   return (
-    <div class="oj-flex oj-sm-flex-direction-column">
-      <div class="oj-flex-item oj-flex-bar">
+    <div class="oj-sm-12">
+    <div class="oj-flex oj-sm-flex-direction-column oj-sm-3">
+      <div class="oj-flex-item oj-flex-bar oj-sm-align-items-center">
         <div
           role="img"
-          class="oj-flex-bar-start oj-sm-padding-4x-start oj-icon orbr-oracle-icon"
+          class="oj-flex-bar-start oj-icon orbr-oracle-icon oj-sm-align-items-centre"
           title="red bull racing oracle partner logo"
           alt="Red Bull Racing Oracle Partner"
         ></div>
-        <div class="oj-flex-bar-middle oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-align-items-center">
+      </div>
+      <div class="oj-flex-bar-middle oj-sm-flex-items-initial oj-sm-justify-content-center oj-sm-align-items-center">
           <Event eventName={name} />
         </div>
-      </div>
-      <div class="oj-flex oj-sm-flex-items-initial oj-sm-align-items-center orbr-counter">
+      <div class="oj-flex oj-sm-flex-items-initial oj-sm-align-items-centre orbr-counter">
         <Counter targetTime={eventTime} />
       </div>
       <span>
@@ -60,6 +61,8 @@ export function Content() {
         </oj-drawer-popup>
       </span>
       <oj-button onojAction={open} label="Edit Events"></oj-button>
+    </div>
+    <div class="oj-sm-9">video goes there</div>
     </div>
   );
 }

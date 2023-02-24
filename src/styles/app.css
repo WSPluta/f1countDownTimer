@@ -23,9 +23,6 @@
     --oj-current-bg-color: var(--rbr-blue);
     --oj-body-bg-color: var(--rbr-blue);
     --oj-core-text-color-primary: var(--orbr-ocean190);
-    --oj-typography-heading-2xl-font-size: 12rem;
-    --oj-typography-heading-xl-font-size: 8rem;
-
 }
 
 
@@ -39,12 +36,13 @@
 }
 
 .orbr-counter-label {
-    margin-left:83px;
+    /* margin-left:83px; */
     color: var(--orbr-neutral20);
+    font-size: 1rem;
 }
 .orbr-counter {
     height: 75vh;
-    margin-left: 25%;
+    margin-left: 1%;
 }
 .orbr-oracle-icon {
     width: 730px;
@@ -56,7 +54,7 @@
 }
 
 .orbr-oracle-icon:before {
-    content:url("images/native.png")
+    content:url("images/TAG_Heuer_Logo.png")
 }
 
 html:not([dir="rtl"]) .orbr-oracle-icon {
