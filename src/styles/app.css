@@ -25,7 +25,39 @@
     --oj-core-text-color-primary: var(--orbr-ocean190);
 }
 
+.orbr-content-container {
+    margin-top:40px;
+    margin-bottom: 40px;
+}
+.orbr-clock-container {
+    border: 0.5rem solid var(--orbr-neutral20);
+    color: var(--orbr-neutral20);
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+    padding-left: 8px;
+}
+.orbr-event-container {
+    border: 0.5rem solid var(--orbr-neutral20);
+    color: var(--orbr-neutral20);
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+    margin-top: -0.5rem;
+    padding-left: 8px;
+}
 
+.orbr-event-panel {
+    border: 0.5rem solid var(--orbr-neutral20);
+    border-radius: 50px;
+    max-width: 500px !important;
+    height: 700px;
+}
+
+.orbr-video-container {
+    color: var(--orbr-neutral20);
+    margin: auto;
+    padding-left: 40px;
+    border: 1px solid var(--orbr-neutral20)
+}
 
 .orbr-drawer-end {
     width: 25vw;
@@ -40,21 +72,20 @@
     color: var(--orbr-neutral20);
     font-size: 1rem;
 }
-.orbr-counter {
-    height: 75vh;
-    margin-left: 1%;
+.orbr-counter-container {
+    /* height: 75vh;
+    margin-left: 1%; */
+
 }
 .orbr-oracle-icon {
-    width: 730px;
-    height: 250px;
-    /* padding-right: 4px; */
-    position: relative;
-    top: 0px;
-    left: -12px;
+    width: 300px;
+    height: 100%;
+    margin: auto;
+    content: url(images/TAG_Heuer_Logo.png);
 }
 
 .orbr-oracle-icon:before {
-    content:url("images/TAG_Heuer_Logo.png")
+    /* content:url("images/TAG_Heuer_Logo.png") */
 }
 
 html:not([dir="rtl"]) .orbr-oracle-icon {
