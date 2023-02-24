@@ -57,6 +57,7 @@ export function Content() {
             class="orbr-drawer-end"
             edge="end"
             opened={endOpened}
+            autoDismiss="none"
           >
             <div class="orbr-drawer-header">
               <h6 class="orbr-drawer-text-color">Address</h6>
@@ -90,7 +91,7 @@ export function Content() {
             </div>
           </oj-drawer-popup>
         </span>
-        <oj-button onojAction={open} label="Edit Events"></oj-button>
+        <oj-button onojAction={open} label="Edit Events" class="oj-color-invert"></oj-button>
     </div>
   );
 }

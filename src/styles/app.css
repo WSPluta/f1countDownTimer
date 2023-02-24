@@ -79,8 +79,10 @@
 }
 .orbr-oracle-icon {
     width: 300px;
-    height: 100%;
+    height: 95%;
     margin: auto;
+    padding-top: 20px;
+    margin-bottom: -70px;
     content: url(images/TAG_Heuer_Logo.png);
 }
 
