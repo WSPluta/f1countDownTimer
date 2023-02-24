@@ -1,0 +1,72 @@
+/*
+    Document   : override
+    Created on : <date>
+    Author     : <author>
+    Description:
+        This is where any of your application specific styles should be included
+*/
+
+:root{
+    --rbr-blue: #001a30;
+    --rbr-red: #ea1d2d;
+    --rbr-yellow: #fcd700;
+    --rbr-grey: #a8a9ac;
+
+    --orbr-neutral20: #F5F4F2;
+    --orbr-neutral50: #D4CFCA;
+    --orbr-ocean180: #13212c;
+    --orbr-ocean190: #0b171f;
+    --orbr-oracle: #c74634;
+
+    --ut-header-background-colour: var(--rbr-grey);
+
+    --oj-current-bg-color: var(--rbr-blue);
+    --oj-body-bg-color: var(--rbr-blue);
+    --oj-core-text-color-primary: var(--orbr-ocean190);
+    --oj-typography-heading-2xl-font-size: 12rem;
+    --oj-typography-heading-xl-font-size: 8rem;
+
+}
+
+
+
+.orbr-drawer-end {
+    width: 25vw;
+}
+
+.orbr-counter-text, .orbr-event-text  {
+    color: var(--orbr-neutral20);
+}
+
+.orbr-counter-label {
+    margin-left:83px;
+    color: var(--orbr-neutral20);
+}
+.orbr-counter {
+    height: 75vh;
+    margin-left: 25%;
+}
+.orbr-oracle-icon {
+    width: 730px;
+    height: 250px;
+    /* padding-right: 4px; */
+    position: relative;
+    top: 0px;
+    left: -12px;
+}
+
+.orbr-oracle-icon:before {
+    content:url("images/native.png")
+}
+
+html:not([dir="rtl"]) .orbr-oracle-icon {
+    padding-right:4px
+}
+
+html[dir="rtl"] .orbr-oracle-icon {
+    padding-left:4px
+}
+
+.orbr-oracle-icon:before {
+    display:inline
+}
