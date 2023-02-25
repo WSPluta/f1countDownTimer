@@ -247,6 +247,7 @@ export function Content() {
                   <oj-input-text
                     labelHint="Name"
                     value={eventNameVal}
+                    help={{instruction:'All event names must be unique'}}
                     onvalueChanged={updateNameVal}
                   ></oj-input-text>
                   <oj-input-text
