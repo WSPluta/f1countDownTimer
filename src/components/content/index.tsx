@@ -1,5 +1,6 @@
 import { Event } from "../event/index";
 import { Counter } from "../counter/index";
+import { Time } from "../time/index";
 import { h } from "preact";
 import { useState } from "preact/hooks";
 import "ojs/ojdrawerpopup";
@@ -9,15 +10,16 @@ import "ojs/ojinputtext";
 
 export function Content() {
   const [eventTime, setEventTime] = useState<Date>(
-    new Date("02/24/2023 19:50:59")
+    new Date("02/25/2023 19:50:59")
   );
   const [name, setName] = useState<string>("Event Name");
   const [endOpened, setEndOpened] = useState<boolean>(false);
-
+  
+  //TODO
+  // const [timeNow, setTimeNow] = useState<Date>;
   const endToggle = () => {
     endOpened ? setEndOpened(false) : setEndOpened(true);
   };
-
   const open = () => {
     setEndOpened(true);
   };
@@ -36,10 +38,11 @@ export function Content() {
           ></div>
         </div>      
         <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-clock-container">
-          Time stuff goes here
+          Time stuff goes here 
+          {/* TODO <Time localTime={timeNow} /> */}
         </div>
         <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-event-container">
-          <Event eventName={name} />
+          <p>Countdown until the:</p> <Event eventName={name} />
         </div>
         <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-centre orbr-counter-container">
           <Counter targetTime={eventTime} />

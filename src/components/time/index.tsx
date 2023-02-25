@@ -2,11 +2,11 @@ import { h } from "preact";
 import { useState, useEffect } from "preact/hooks";
 
 type Props = {
-  targetTime: Date | undefined;
+  localTime: Date | undefined;
 };
 
-const getTimeRemaining = (targetTime) => {
-  const total = Date.parse(targetTime) - Date.parse(new Date().toISOString());
+const getLocalTime = (localTime) => {
+  const total = Date.parse(new Date().toISOString());
   const seconds = Math.floor((total / 1000) % 60).toString();
   const minutes = Math.floor((total / 1000 / 60) % 60).toString();
   const hours = Math.floor((total / (1000 * 60 * 60)) % 24).toString();
@@ -21,15 +21,15 @@ const getTimeRemaining = (targetTime) => {
   };
 };
 
-export function Counter(props: Props) {
-  const initClock = getTimeRemaining(props.targetTime)
+export function Time(props: Props) {
+  const initClock = getLocalTime(props.localTime)
   const [hours, setHours] = useState<string>(initClock.hours.padStart(2,'0'));
   const [minutes, setMinutes] = useState<string>(initClock.minutes.padStart(2,'0'));
   const [seconds, setSeconds] = useState<string>(initClock.seconds.padStart(2,'0'));
 
   useEffect(() => {
     const timeinterval = setInterval(() => {
-      const t = getTimeRemaining(props.targetTime);
+      const t = getLocalTime(props.localTime);
       setHours(t.hours.padStart(2,'0'));
       setMinutes(t.minutes.padStart(2,'0'));
       setSeconds(t.seconds.padStart(2,'0'));
@@ -44,7 +44,7 @@ export function Counter(props: Props) {
       <div class="oj-sm-justify-content-center orbr-counter-text">
         {hours} : {minutes} : {seconds}
       </div>
-      <div class="oj-sm-justify-content-center oj-typography-heading-xl orbr-counter-label"></div>
+      <div class="oj-sm-justify-content-center oj-typography-heading-xl orbr-counter-label">HR : MM : SS</div>
     </div>
   );
 }

@@ -37,12 +37,14 @@
     padding-left: 8px;
 }
 .orbr-event-container {
-    border: 0.5rem solid var(--orbr-neutral20);
+    /* border: 0.5rem solid var(--orbr-neutral20); */
     color: var(--orbr-neutral20);
-    margin-left: -0.5rem;
+    /* margin-left: -1.5rem;
     margin-right: -0.5rem;
-    margin-top: -0.5rem;
+    margin-top: -0.5rem; */
     padding-left: 8px;
+    margin: auto;
+    text-align: center;
 }
 
 .orbr-event-panel {
@@ -75,6 +77,7 @@
 .orbr-counter-container {
     /* height: 75vh;
     margin-left: 1%; */
+    text-align: center;
 
 }
 .orbr-oracle-icon {
@@ -100,4 +103,8 @@ html[dir="rtl"] .orbr-oracle-icon {
 
 .orbr-oracle-icon:before {
     display:inline
+}
+
+.p {
+
 }
