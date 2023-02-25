@@ -1,4 +1,3 @@
-import { Event } from "../event/index";
 import { Counter } from "../counter/index";
 import { Time } from "../time/index";
 import { h } from "preact";
@@ -172,12 +171,13 @@ export function Content() {
           <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-clock-container">
             <Time localTime={timeNow}/>
         </div>
-          <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-event-container">
-            <p>Countdown until the:</p> <Event eventName={name} />
-          </div>
-          <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-centre orbr-counter-container">
+          <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center oj-typography-heading-md orbr-event-container">
+            <div>Countdown to {name} : </div>
             <Counter targetTime={eventTime} />
           </div>
+          {/* <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center">
+            <Counter targetTime={eventTime} />
+          </div> */}
         </div>
 
         {/* 9 column panel for video or other content */}

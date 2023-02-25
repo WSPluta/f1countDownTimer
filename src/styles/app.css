@@ -76,16 +76,17 @@ button.addbtn:focus-visible {
 
 .orbr-clock-container {
   border: 0.5rem solid var(--orbr-neutral20);
+  border-bottom: 0;
   color: var(--orbr-neutral20);
   margin-left: -0.5rem;
   margin-right: -0.5rem;
+  margin-top: 15px;
+  margin-bottom: -50px;
   padding-left: 8px;
 }
 .orbr-event-container {
-  border: 0.5rem solid var(--orbr-neutral20);
+  border-top: 0.5rem solid var(--orbr-neutral20);
   color: var(--orbr-neutral20);
-  margin-left: -0.5rem;
-  margin-right: -0.5rem;
   margin-top: -0.5rem;
   padding-left: 8px;
 }
@@ -94,7 +95,7 @@ button.addbtn:focus-visible {
   border: 0.5rem solid var(--orbr-neutral20);
   border-radius: 50px;
   max-width: 500px !important;
-  height: 700px;
+  height: 675px;
 }
 
 .orbr-video-container {
@@ -118,7 +119,18 @@ button.addbtn:focus-visible {
   /*  */
 }
 
-.orbr-counter-text,
+.orbr-counter-text {
+  color: var(--orbr-neutral20);
+  margin-top:15px;
+  margin-bottom:-50px;
+  text-align: center;
+}
+
+.orbr-time-text {
+  margin-top: 15px;
+    margin-bottom: -50px;
+}
+
 .orbr-event-text {
   color: var(--orbr-neutral20);
 }
