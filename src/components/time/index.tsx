@@ -2,47 +2,37 @@ import { h } from "preact";
 import { useState, useEffect } from "preact/hooks";
 
 type Props = {
-  localTime: Date | undefined;
-};
-
-const getLocalTime = (localTime) => {
-  const total = Date.parse(new Date().toISOString());
-  const seconds = Math.floor((total / 1000) % 60).toString();
-  const minutes = Math.floor((total / 1000 / 60) % 60).toString();
-  const hours = Math.floor((total / (1000 * 60 * 60)) % 24).toString();
-  const days = Math.floor(total / (1000 * 60 * 60 * 24)).toString();
-
-  return {
-    total,
-    days,
-    hours,
-    minutes,
-    seconds,
-  };
+  localTime: Date
 };
 
 export function Time(props: Props) {
-  const initClock = getLocalTime(props.localTime)
-  const [hours, setHours] = useState<string>(initClock.hours.padStart(2,'0'));
-  const [minutes, setMinutes] = useState<string>(initClock.minutes.padStart(2,'0'));
-  const [seconds, setSeconds] = useState<string>(initClock.seconds.padStart(2,'0'));
+  const [time, setTime] = useState<number>(Date.now());
+
+  const formatDate = (data,timezone) => {
+    let dateObj = new Date(data);
+    let options: Intl.DateTimeFormatOptions = {
+      hour: "2-digit",
+      minute: "2-digit",
+      second:"2-digit",
+      timeZone: timezone, // "Europe/Prague"
+      hour12: false,
+    };
+
+    return dateObj.toLocaleTimeString(navigator.language,
+      options
+    );
+  };
 
   useEffect(() => {
-    const timeinterval = setInterval(() => {
-      const t = getLocalTime(props.localTime);
-      setHours(t.hours.padStart(2,'0'));
-      setMinutes(t.minutes.padStart(2,'0'));
-      setSeconds(t.seconds.padStart(2,'0'));
-      if (t.total <= 0) {
-        clearInterval(timeinterval);
-      }
-    }, 1000);
-  }, []);
+		let timer = setInterval(() => setTime(Date.now()), 1000);
+		return () => clearInterval(timer);
+	}, []);
 
   return (
     <div class="oj-typography-heading-2xl oj-sm-align-items-center oj-sm-justify-content-center">
       <div class="oj-sm-justify-content-center orbr-counter-text">
-        {hours} : {minutes} : {seconds}
+      <div>Current time: {formatDate(time,Intl.DateTimeFormat().resolvedOptions().timeZone)}</div>
+      <div>Factory time: {formatDate(time,'Europe/Prague')}</div>
       </div>
       <div class="oj-sm-justify-content-center oj-typography-heading-xl orbr-counter-label"></div>
     </div>

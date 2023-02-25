@@ -7,6 +7,15 @@ type Props = {
 
 const getTimeRemaining = (targetTime) => {
   const total = Date.parse(targetTime) - Date.parse(new Date().toISOString());
+  if(total < 0){
+    return {
+      total:0,
+      days:"00",
+      hours:"00",
+      minutes:"00",
+      seconds:"00",
+    }
+  }
   const seconds = Math.floor((total / 1000) % 60).toString();
   const minutes = Math.floor((total / 1000 / 60) % 60).toString();
   const hours = Math.floor((total / (1000 * 60 * 60)) % 24).toString();
@@ -42,6 +51,9 @@ export function Counter(props: Props) {
       setSeconds(t.seconds.padStart(2, "0"));
       if (t.total <= 0) {
         clearInterval(timeinterval);
+        setHours("00");
+        setMinutes("00");
+        setSeconds("00");
       }
     }, 1000);
     return () => {

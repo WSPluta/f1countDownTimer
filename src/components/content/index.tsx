@@ -30,17 +30,17 @@ export function Content() {
   );
 
   const [eventTime, setEventTime] = useState<Date>(
-    new Date("02/25/2023 19:50:59")
+    new Date("2022-12-25 00:00:00")
   );
-  const [name, setName] = useState<string>("Event Name");
+  const [name, setName] = useState<string>("No Event");
   const [endOpened, setEndOpened] = useState<boolean>(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
   const [locale, setLocale] = useState<boolean>(false);
   const [eventNameVal, setEventNameVal] = useState<string>("");
   const [startTimeVal, setStartTimeVal] = useState<string>("");
   const [scheduleValue,setScheduleValue] = useState<string>("");
 
   const updateScheduleVal = (event:ojTextArea.valueChanged) => {
-    //console.log('sched: ' + event.detail);
     setScheduleValue(event.detail.value);
   }
 
@@ -68,7 +68,7 @@ export function Content() {
   };
   
   //TODO
-  const [timeNow, setTimeNow] = useState<Date>();
+  const [timeNow, setTimeNow] = useState<Date>(new Date(Date.now()));
   const endToggle = () => {
     endOpened ? setEndOpened(false) : setEndOpened(true);
   };
@@ -103,6 +103,9 @@ export function Content() {
       if (event.detail.updatedFrom === "internal" && event.detail.value.data) {
         setName(event.detail.value.data.name);
         setEventTime(new Date(event.detail.value.data.startTime));
+      }else{
+        setName("No Event");
+        setEventTime(new Date("2022-12-25 00:00:00"));
       }
     },
     [eventTime, name]
@@ -111,13 +114,17 @@ export function Content() {
   const deleteEvent = (event) => {
     let removedEvent = event.target.id;
     let tempArray = [];
-    eventData.filter((event) => {
+    eventDP.current.data.filter((event) => {
       if (event.name !== removedEvent) {
         tempArray.push({ name: event.name, startTime: event.startTime });
       }
     });
-    eventData = tempArray;
-    eventDP.current.data = eventData;
+    if(tempArray.length === 0) {
+      setName('No Event');
+      setEventTime(new Date("2022-12-25 00:00:00"));
+      setSelectedEvent(null);
+    }
+    eventDP.current.data = tempArray;
   };
 
   const listItemTemplate = (
@@ -163,8 +170,7 @@ export function Content() {
             ></div>
           </div>
           <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-clock-container">
-            Time stuff goes here 
-            <Time localTime={timeNow} />
+            <Time localTime={timeNow}/>
         </div>
           <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-event-container">
             <p>Countdown until the:</p> <Event eventName={name} />
@@ -217,6 +223,7 @@ export function Content() {
                 <oj-list-view
                   data={eventDP.current}
                   selectionMode="single"
+                  selected={selectedEvent}
                   onfirstSelectedItemChanged={handleSelection}
                   class="orbr-listview-sizing"
                 >
