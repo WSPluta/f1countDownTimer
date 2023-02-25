@@ -16,7 +16,7 @@ export function Content() {
   const [endOpened, setEndOpened] = useState<boolean>(false);
   
   //TODO
-  // const [timeNow, setTimeNow] = useState<Date>;
+  const [timeNow, setTimeNow] = useState<Date>();
   const endToggle = () => {
     endOpened ? setEndOpened(false) : setEndOpened(true);
   };
@@ -39,7 +39,7 @@ export function Content() {
         </div>      
         <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-clock-container">
           Time stuff goes here 
-          {/* TODO <Time localTime={timeNow} /> */}
+          <Time localTime={timeNow} />
         </div>
         <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-event-container">
           <p>Countdown until the:</p> <Event eventName={name} />

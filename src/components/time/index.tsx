@@ -44,7 +44,7 @@ export function Time(props: Props) {
       <div class="oj-sm-justify-content-center orbr-counter-text">
         {hours} : {minutes} : {seconds}
       </div>
-      <div class="oj-sm-justify-content-center oj-typography-heading-xl orbr-counter-label">HR : MM : SS</div>
+      <div class="oj-sm-justify-content-center oj-typography-heading-xl orbr-counter-label"></div>
     </div>
   );
 }
