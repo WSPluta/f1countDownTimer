@@ -1,8 +1,8 @@
 import { h } from "preact";
-import { useState, useEffect } from "preact/hooks";
+import { useState, useEffect, useMemo } from "preact/hooks";
 
 type Props = {
-  targetTime: Date | undefined;
+  targetTime: Date;
 };
 
 const getTimeRemaining = (targetTime) => {
@@ -22,22 +22,32 @@ const getTimeRemaining = (targetTime) => {
 };
 
 export function Counter(props: Props) {
-  const initClock = getTimeRemaining(props.targetTime)
-  const [hours, setHours] = useState<string>(initClock.hours.padStart(2,'0'));
-  const [minutes, setMinutes] = useState<string>(initClock.minutes.padStart(2,'0'));
-  const [seconds, setSeconds] = useState<string>(initClock.seconds.padStart(2,'0'));
+  const initClock = useMemo(() => {
+    return getTimeRemaining(props.targetTime);
+  }, [props.targetTime]);
+
+  const [hours, setHours] = useState<string>(initClock.hours.padStart(2, "0"));
+  const [minutes, setMinutes] = useState<string>(
+    initClock.minutes.padStart(2, "0")
+  );
+  const [seconds, setSeconds] = useState<string>(
+    initClock.seconds.padStart(2, "0")
+  );
 
   useEffect(() => {
     const timeinterval = setInterval(() => {
       const t = getTimeRemaining(props.targetTime);
-      setHours(t.hours.padStart(2,'0'));
-      setMinutes(t.minutes.padStart(2,'0'));
-      setSeconds(t.seconds.padStart(2,'0'));
+      setHours(t.hours.padStart(2, "0"));
+      setMinutes(t.minutes.padStart(2, "0"));
+      setSeconds(t.seconds.padStart(2, "0"));
       if (t.total <= 0) {
         clearInterval(timeinterval);
       }
     }, 1000);
-  }, []);
+    return () => {
+      clearInterval(timeinterval);
+    };
+  }, [props.targetTime]);
 
   return (
     <div class="oj-typography-heading-2xl oj-sm-align-items-center oj-sm-justify-content-center">
