@@ -130,16 +130,20 @@ export function Content() {
     event: ojListView.ItemTemplateContext<Event["name"], Event>
   ) => {
     return (
-      <div>
-        <oj-label-value>
-          <div slot={"label"}>{event.data.name}</div>
-          <div slot={"value"}>{formatDate(event.data.startTime)}</div>
-        </oj-label-value>
+      <div class="oj-flex-bar">
+        <div class="oj-flex-bar-start oj-flex oj-sm-flex-direction-column">
+          <div class="oj-flex-item oj-typography-subheading-sm ">{event.data.name}</div>
+          <div class="oj-flex-item">{formatDate(event.data.startTime)}</div>
+          </div>
         <oj-button
+          display="icons"
           id={event.data.name}
           onojAction={deleteEvent}
           label="Remove"
-        ></oj-button>
+          class="oj-flex-bar-end"
+        >
+          <span slot="startIcon" class="oj-ux-ico-close"></span>
+        </oj-button>
       </div>
     );
   };
@@ -223,6 +227,7 @@ export function Content() {
                 <oj-list-view
                   data={eventDP.current}
                   selectionMode="single"
+                  gridlines={{item:'visibleExceptLast'}}
                   selected={selectedEvent}
                   onfirstSelectedItemChanged={handleSelection}
                   class="orbr-listview-sizing"
