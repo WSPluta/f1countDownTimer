@@ -29,8 +29,8 @@ export function Time(props: Props) {
   return (
     <div class="oj-flex oj-typography-heading-md oj-sm-align-items-center orbr-time-text">
       <div>
-        TIME AT CIRCUIT:{" "}
-        {formatDate(time, Intl.DateTimeFormat().resolvedOptions().timeZone)}
+        <p>TIME AT CIRCUIT:{" "}
+        {formatDate(time, Intl.DateTimeFormat().resolvedOptions().timeZone)}</p>
       </div>
       <div>TIME AT FACTORY: {formatDate(time, "Europe/Prague")}</div>
     </div>

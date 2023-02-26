@@ -163,7 +163,7 @@ export function Content() {
           <div class="oj-flex-item oj-sm-align-items-center">
             <div
               role="img"
-              class="oj-flex oj-flex-item oj-icon orbr-oracle-icon oj-sm-align-items-centre"
+              class="oj-flex oj-flex-item oj-icon orbr-tag-icon oj-sm-align-items-centre"
               title="red bull racing oracle partner logo"
               alt="Red Bull Racing Oracle Partner"
             ></div>
@@ -172,7 +172,7 @@ export function Content() {
             <Time localTime={timeNow}/>
         </div>
           <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center oj-typography-heading-md orbr-event-container">
-            <div>Countdown to {name} : </div>
+            <div>COUNTDOWN TO <i>{name} :</i></div>
             <Counter targetTime={eventTime} />
           </div>
           {/* <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center">
@@ -182,7 +182,17 @@ export function Content() {
 
         {/* 9 column panel for video or other content */}
         <div class="oj-flex-item oj-sm-8">
-          <div class="orbr-video-container">video goes there</div>
+          <div class="orbr-video-container"></div>
+
+          <div
+              role="img"
+              class="oj-flex oj-flex-item oj-icon orbr-oracle-icon oj-sm-align-items-centre"
+              title="red bull racing oracle partner logo"
+              alt="Red Bull Racing Oracle Partner"
+            ></div>
+
+
+
         </div>
 
         {/* event configuration drawer */}
