@@ -135,9 +135,9 @@ button.addbtn:focus-visible {
 
 .orbr-time-text {
   margin-top: 13px;
+  padding-left: 8px;
   margin-bottom: -50px;
   border-top: 0.21rem solid var(--orbr-neutral20);
-  font-size: 40px;
   font-style: italic;
 
 }
@@ -183,7 +183,8 @@ html[dir="rtl"] .orbr-tag-icon {
 }
 
 .orbr-oracle-icon {
-  width: 300px;
+  margin-top: 8px;
+  width: 150px;
   content: url(images/Oracle-WhiteLogo.svg);
 }
 

@@ -1,5 +1,5 @@
 /**
- * Special thanks to Yaphi Berhanu and Nilson Jacques 
+ * Special thanks to Yaphi Berhanu and Nilson Jacques
  * for their article on JavaScript based countdown timers
  * https://www.sitepoint.com/build-javascript-countdown-timer-no-dependencies/
  */
@@ -9,18 +9,20 @@ import { useState, useEffect, useMemo } from "preact/hooks";
 
 type Props = {
   targetTime: Date;
+  loadNext: () => void;
+  autoLoad: boolean;
 };
 
 const getTimeRemaining = (targetTime) => {
   const total = Date.parse(targetTime) - Date.parse(new Date().toISOString());
-  if(total < 0){
+  if (total < 0) {
     return {
-      total:0,
-      days:"00",
-      hours:"00",
-      minutes:"00",
-      seconds:"00",
-    }
+      total: 0,
+      days: "00",
+      hours: "00",
+      minutes: "00",
+      seconds: "00",
+    };
   }
   const seconds = Math.floor((total / 1000) % 60).toString();
   const minutes = Math.floor((total / 1000 / 60) % 60).toString();
@@ -60,12 +62,15 @@ export function Counter(props: Props) {
         setHours("00");
         setMinutes("00");
         setSeconds("00");
+        if (props.autoLoad) {
+          props.loadNext();
+        }
       }
     }, 1000);
     return () => {
       clearInterval(timeinterval);
     };
-  }, [props.targetTime]);
+  }, [props.targetTime,props.autoLoad]);
 
   return (
     <div class="oj-typography-heading-2xl oj-sm-align-items-center oj-sm-justify-content-center">

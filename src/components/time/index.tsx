@@ -27,12 +27,12 @@ export function Time(props: Props) {
   }, []);
 
   return (
-    <div class="oj-flex oj-typography-heading-md oj-sm-align-items-center orbr-time-text">
-      <div>
-        <p>TIME AT CIRCUIT:{" "}
-        {formatDate(time, Intl.DateTimeFormat().resolvedOptions().timeZone)}</p>
+    <div class="oj-flex oj-sm-flex-direction-column oj-typography-subheading-xl oj-sm-align-items-start orbr-time-text">
+      <div class="oj-flex-item">
+        TIME AT CIRCUIT:{" "}
+        {formatDate(time, Intl.DateTimeFormat().resolvedOptions().timeZone)}
       </div>
-      <div>TIME AT FACTORY: {formatDate(time, "Europe/Prague")}</div>
+      <div class="oj-flex-item">TIME AT FACTORY: {formatDate(time, "Europe/Prague")}</div>
     </div>
   );
 }

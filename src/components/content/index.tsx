@@ -1,7 +1,7 @@
 import { Counter } from "../counter/index";
 import { Time } from "../time/index";
 import { h } from "preact";
-import { useState, useCallback, useRef } from "preact/hooks";
+import { useState, useCallback, useRef, useEffect } from "preact/hooks";
 import MutableArrayDataProvider = require("ojs/ojmutablearraydataprovider");
 import "ojs/ojdrawerpopup";
 import "ojs/ojbutton";
@@ -12,7 +12,8 @@ import "ojs/ojlistview";
 import { ojListView } from "ojs/ojlistview";
 import { ojSwitch } from "ojs/ojswitch";
 import { ojInputText, ojTextArea } from "ojs/ojinputtext";
-import { ojButton } from "ojs/ojbutton";
+import { KeySet, KeySetImpl } from "ojs/ojkeyset";
+import { FetchByKeysParameters } from "@oracle/oraclejet/ojdataprovider";
 
 type Event = {
   name: string;
@@ -23,9 +24,7 @@ let eventData = [];
 
 export function Content() {
   const eventDP = useRef(
-    new MutableArrayDataProvider<Event["name"], Event>(eventData, {
-      keyAttributes: "name",
-    })
+    new MutableArrayDataProvider<Event["name"], Event>(eventData)
   );
 
   const [eventTime, setEventTime] = useState<Date>(
@@ -35,18 +34,27 @@ export function Content() {
   const [endOpened, setEndOpened] = useState<boolean>(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [locale, setLocale] = useState<boolean>(false);
+  const [autoLoad, setAutoLoad] = useState<boolean>(false);
   const [eventNameVal, setEventNameVal] = useState<string>("");
   const [startTimeVal, setStartTimeVal] = useState<string>("");
-  const [scheduleValue,setScheduleValue] = useState<string>("");
+  const [scheduleValue, setScheduleValue] = useState<string>("");
 
-  const updateScheduleVal = (event:ojTextArea.valueChanged) => {
+  const updateScheduleVal = (event: ojTextArea.valueChanged) => {
     setScheduleValue(event.detail.value);
-  }
+  };
 
+  const updateAutoLoad = (event: ojSwitch.valueChanged) => {
+    setAutoLoad(event.detail.value);
+  };
+  const loadNextScheduleItem = () => {
+    let currentKey: Array<any> = Array.from(selectedEvent.keys.keys.values());
+    let newKey = currentKey[0] + 1;
+    setSelectedEvent(new KeySetImpl([newKey]));
+  };
   const importSchedule = () => {
     let newSchedule = JSON.parse(scheduleValue);
     eventDP.current.data = newSchedule;
-  }
+  };
 
   const updateNameVal = (event: ojInputText.valueChanged) => {
     setEventNameVal(event.detail.value);
@@ -65,7 +73,7 @@ export function Content() {
     tempArray.push({ name: tempName, startTime: finalStart });
     eventDP.current.data = tempArray;
   };
-  
+
   //TODO
   const [timeNow, setTimeNow] = useState<Date>(new Date(Date.now()));
   const endToggle = () => {
@@ -96,19 +104,34 @@ export function Content() {
   const updateLocale = (event: ojSwitch.valueChanged) => {
     setLocale(event.detail.value);
   };
-  const handleSelection = useCallback(
-    (event: ojListView.firstSelectedItemChanged<Event["name"], Event>) => {
-      console.log(event.detail.value);
-      if (event.detail.updatedFrom === "internal" && event.detail.value.data) {
-        setName(event.detail.value.data.name);
-        setEventTime(new Date(event.detail.value.data.startTime));
-      }else{
+
+  const selectedChangedHandler = useCallback(
+    (event: ojListView.selectedChanged<Event["name"], Event>) => {
+      console.log("Selected: ", event.detail.value);
+      if (event.detail.updatedFrom === "internal") {
+         setSelectedEvent(event.detail.value);
+      }
+    },
+    [selectedEvent]
+  );
+
+  useEffect(() => {
+    if (selectedEvent) {
+      let key: Array<string> = Array.from(
+        (selectedEvent as KeySetImpl<Event["name"]>).keys.keys.values()
+      );
+      let tempData = [...eventDP.current.data];
+      if (key.length > 0) {
+        let data = tempData[key[0]];
+        setName(data.name);
+        setEventTime(new Date(data.startTime));
+      } else {
+        setSelectedEvent(new KeySetImpl([]));
         setName("No Event");
         setEventTime(new Date("2022-12-25 00:00:00"));
       }
-    },
-    [eventTime, name]
-  );
+    }
+  }, [selectedEvent]);
 
   const deleteEvent = (event) => {
     let removedEvent = event.target.id;
@@ -118,8 +141,8 @@ export function Content() {
         tempArray.push({ name: event.name, startTime: event.startTime });
       }
     });
-    if(tempArray.length === 0) {
-      setName('No Event');
+    if (tempArray.length === 0) {
+      setName("No Event");
       setEventTime(new Date("2022-12-25 00:00:00"));
       setSelectedEvent(null);
     }
@@ -132,9 +155,11 @@ export function Content() {
     return (
       <div class="oj-flex-bar">
         <div class="oj-flex-bar-start oj-flex oj-sm-flex-direction-column">
-          <div class="oj-flex-item oj-typography-subheading-sm ">{event.data.name}</div>
-          <div class="oj-flex-item">{formatDate(event.data.startTime)}</div>
+          <div class="oj-flex-item oj-typography-subheading-sm ">
+            {event.data.name}
           </div>
+          <div class="oj-flex-item">{formatDate(event.data.startTime)}</div>
+        </div>
         <oj-button
           display="icons"
           id={event.data.name}
@@ -147,9 +172,7 @@ export function Content() {
       </div>
     );
   };
-  const noDataTemplate = (
-    event: ojListView.ItemTemplateContext<Event["name"], Event>
-  ) => {
+  const noDataTemplate = () => {
     return (
       <div>
         <h3>No Events available</h3>
@@ -162,41 +185,49 @@ export function Content() {
     <>
       // outer container
       <div class="oj-flex oj-sm-flex-direction-row oj-sm-12 orbr-content-container">
-        {/* 3 column panel for times and event data */}
+        {/* 4 column panel for times and event data */}
         <div class="oj-flex-item oj-flex oj-sm-flex-direction-column oj-sm-4 orbr-event-panel">
           <div class="oj-flex-item oj-sm-align-items-center">
             <div
               role="img"
               class="oj-flex oj-flex-item oj-icon orbr-tag-icon oj-sm-align-items-centre"
-              title="red bull racing oracle partner logo"
-              alt="Red Bull Racing Oracle Partner"
+              title="Tag Heuer logo"
+              alt="Tag Heuer logo"
             ></div>
           </div>
           <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-clock-container">
-            <Time localTime={timeNow}/>
-        </div>
+            <Time localTime={timeNow} />
+          </div>
           <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center oj-typography-heading-md orbr-event-container">
-            <div>COUNTDOWN TO <i>{name} :</i></div>
-            <Counter targetTime={eventTime} />
+            <div>
+              COUNTDOWN TO <i>{name} :</i>
+            </div>
+            <Counter
+              targetTime={eventTime}
+              autoLoad={autoLoad}
+              loadNext={loadNextScheduleItem}
+            />
           </div>
           {/* <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center">
             <Counter targetTime={eventTime} />
           </div> */}
         </div>
 
-        {/* 9 column panel for video or other content */}
+        {/* 8 column panel for video or other content */}
         <div class="oj-flex-item oj-sm-8">
+          {/* Add content for the right side panel inside of the below <div> */}
           <div class="orbr-video-container"></div>
-
-          <div
+        </div>
+        <div class="oj-flex-item oj-typography-subheading-md oj-flex-bar oj-color-invert oj-sm-margin-2x-top">
+          <div class="oj-flex-bar-end">
+            POWERED BY
+            <div
               role="img"
-              class="oj-flex oj-flex-item oj-icon orbr-oracle-icon oj-sm-align-items-centre"
-              title="red bull racing oracle partner logo"
-              alt="Red Bull Racing Oracle Partner"
+              class="oj-icon orbr-oracle-icon"
+              title="oracle logo"
+              alt="Oracle logo"
             ></div>
-
-
-
+          </div>
         </div>
 
         {/* event configuration drawer */}
@@ -232,24 +263,27 @@ export function Content() {
                     value={locale}
                     onvalueChanged={updateLocale}
                   ></oj-switch>
+                  <oj-switch
+                    labelHint="Auto-load schedule"
+                    labelEdge="inside"
+                    value={autoLoad}
+                    onvalueChanged={updateAutoLoad}
+                  ></oj-switch>
                 </oj-form-layout>
                 <h4>Select active event</h4>
                 <oj-list-view
                   data={eventDP.current}
                   selectionMode="single"
-                  gridlines={{item:'visibleExceptLast'}}
+                  gridlines={{ item: "visibleExceptLast" }}
                   selected={selectedEvent}
-                  onfirstSelectedItemChanged={handleSelection}
+                  onselectedChanged={selectedChangedHandler}
                   class="orbr-listview-sizing"
                 >
                   <template
                     slot="itemTemplate"
                     render={listItemTemplate}
                   ></template>
-                  <template
-                    slot="noData"
-                    render={noDataTemplate}
-                  ></template>
+                  <template slot="noData" render={noDataTemplate}></template>
                 </oj-list-view>
 
                 <oj-form-layout class="oj-sm-margin-4x-top">
@@ -257,7 +291,7 @@ export function Content() {
                   <oj-input-text
                     labelHint="Name"
                     value={eventNameVal}
-                    help={{instruction:'All event names must be unique'}}
+                    help={{ instruction: "All event names must be unique" }}
                     onvalueChanged={updateNameVal}
                   ></oj-input-text>
                   <oj-input-text
@@ -278,14 +312,20 @@ export function Content() {
                 <oj-form-layout class="oj-sm-margin-4x-top">
                   <h4>Import event schedule</h4>
                   <oj-text-area
-                  rows={10}
-                  labelHint="Schedule"
-                  placeholder='[ {"name": "My event", "startTime":"2023-03-19 14:15:00"} ]'
-                  value={scheduleValue}
-                  help={{instruction:'paste array of objects in the format of \{"name":"my event", "startTime":"YYYY-MM-DD<space>HH:MM:SS"\}'}}
-                  onvalueChanged={updateScheduleVal}
+                    rows={10}
+                    labelHint="Schedule"
+                    placeholder='[ {"name": "My event", "startTime":"2023-03-19 14:15:00"} ]'
+                    value={scheduleValue}
+                    help={{
+                      instruction:
+                        'paste array of objects in the format of {"name":"my event", "startTime":"YYYY-MM-DD<space>HH:MM:SS"}',
+                    }}
+                    onvalueChanged={updateScheduleVal}
                   ></oj-text-area>
-                  <oj-button onojAction={importSchedule} label="Import"></oj-button>
+                  <oj-button
+                    onojAction={importSchedule}
+                    label="Import"
+                  ></oj-button>
                 </oj-form-layout>
               </div>
             </div>
