@@ -1,3 +1,9 @@
+/**
+ * Special thanks to Yaphi Berhanu and Nilson Jacques 
+ * for their article on JavaScript based countdown timers
+ * https://www.sitepoint.com/build-javascript-countdown-timer-no-dependencies/
+ */
+
 import { h } from "preact";
 import { useState, useEffect, useMemo } from "preact/hooks";
 

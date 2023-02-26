@@ -106,8 +106,10 @@ button.addbtn:focus-visible {
 .orbr-video-container {
   color: var(--orbr-neutral20);
   margin: auto;
-  padding-left: 40px;
-  /* border: 1px solid var(--orbr-neutral20); */
+  padding: 0px 40px;
+  width: 68vw;
+  height: 73vh;
+  border: 1px solid var(--orbr-neutral20);
 }
 
 .orbr-drawer-end {
