@@ -49,7 +49,12 @@ export function Content() {
   const loadNextScheduleItem = () => {
     let currentKey: Array<any> = Array.from(selectedEvent.keys.keys.values());
     let newKey = currentKey[0] + 1;
+    if (newKey < eventDP.current.data.length){
     setSelectedEvent(new KeySetImpl([newKey]));
+    }else {
+      setAutoLoad(false);
+      setSelectedEvent(new KeySetImpl([]));
+    }
   };
   const importSchedule = () => {
     let newSchedule = JSON.parse(scheduleValue);
@@ -126,7 +131,7 @@ export function Content() {
         setName(data.name);
         setEventTime(new Date(data.startTime));
       } else {
-        setSelectedEvent(new KeySetImpl([]));
+        //setSelectedEvent(new KeySetImpl([]));
         setName("No Event");
         setEventTime(new Date("2022-12-25 00:00:00"));
       }
@@ -166,6 +171,7 @@ export function Content() {
           onojAction={deleteEvent}
           label="Remove"
           class="oj-flex-bar-end"
+          data-oj-clickthrough="disabled"
         >
           <span slot="startIcon" class="oj-ux-ico-close"></span>
         </oj-button>
