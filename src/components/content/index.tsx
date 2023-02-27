@@ -209,10 +209,10 @@ export function Content() {
 
   return (
     <>
-      // outer container
+      {/* // outer container */}
       <div class="oj-flex oj-sm-flex-direction-row oj-sm-12 orbr-content-container">
         {/* 4 column panel for times and event data */}
-        <div class="oj-flex-item oj-flex oj-sm-flex-direction-column oj-sm-3 oj-sm-margin-2x-left orbr-event-panel">
+        <div class="oj-flex-item oj-flex oj-sm-flex-direction-column oj-sm-4 oj-sm-margin-2x-left orbr-event-panel">
           <div class="oj-flex-item oj-sm-align-items-center">
             <div
               role="img"
