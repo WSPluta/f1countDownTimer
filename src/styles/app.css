@@ -113,8 +113,8 @@ button.addbtn2:focus-visible {
   font-size: 20px;
 }
 .orbr-content-container {
-  margin-top: 40px;
-  margin-bottom: 40px;
+  /* margin-top: 40px;
+  margin-bottom: 40px; */
 }
 
 .orbr-listview-sizing {
@@ -156,10 +156,10 @@ button.addbtn2:focus-visible {
 
 .orbr-video-container {
   color: var(--orbr-neutral20);
-  margin: auto;
-  padding: 0px 40px;
-  width: 68vw;
-  height: 73vh;
+  /* margin: auto;
+  padding: 0px 40px; */
+  width: 100%;
+  height: 100%;
   /* border: 1px solid var(--orbr-neutral20); */
 }
 
@@ -275,7 +275,8 @@ html[dir="rtl"] .orbr-tag-icon {
 
 .orbr-oracle-icon {
   /* margin-top: 8px; */
-  width: 150px;
+  width: 300px;
+  height: 37px;
   content: url(images/Oracle-WhiteLogo.svg);
 }
 

@@ -244,11 +244,9 @@ export function Content() {
         {/* 8 column panel for video or other content */}
         <div class="oj-flex-item oj-sm-9">
           {/* Add content for the right side panel inside of the below <div> */}
-          <div class="orbr-video-container">
-
-            
+          <div class="oj-flex orbr-video-container">          
           </div>
-          <div class="oj-flex-item oj-typography-subheading-md oj-flex-bar oj-color-invert oj-sm-margin-2x-top">
+          <div class="oj-flex-item oj-typography-subheading-md oj-flex-bar oj-color-invert">
           <div class="oj-flex-bar-end">
             <span class="o-text" >POWERED BY</span>
             <button class="addbtn2" onClick={open}>
