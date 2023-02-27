@@ -71,12 +71,17 @@ export function Content() {
     let tempName = eventNameVal;
     let tempStart = startTimeVal;
     let tempArray = [...eventDP.current.data];
+    let exists = tempArray.find(event=>event.name === eventNameVal)
+    if(!exists){
     let startParts = tempStart.split(" ");
     let finalStart = startParts.toString().replace(",", "T");
     console.log("name: " + tempName + " : " + finalStart);
 
     tempArray.push({ name: tempName, startTime: finalStart });
     eventDP.current.data = tempArray;
+    }else{
+      alert('name already exists, please use a different event name.')
+    }
   };
 
   //TODO
@@ -333,6 +338,7 @@ export function Content() {
                   <oj-input-text
                     labelHint="Name"
                     value={eventNameVal}
+                    clearIcon="conditional"
                     help={{ instruction: "All event names must be unique" }}
                     onvalueChanged={updateNameVal}
                   ></oj-input-text>
@@ -344,6 +350,7 @@ export function Content() {
                         "Required format YYYY-MM-DD<space>HH:MM:SS with one space.",
                     }}
                     value={startTimeVal}
+                    clearIcon="conditional"
                     onvalueChanged={updateStartTimeVal}
                   ></oj-input-text>
                   <oj-button
