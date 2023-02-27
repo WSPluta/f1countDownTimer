@@ -21,13 +21,11 @@ type Event = {
 };
 
 let eventData = [];
-if(localStorage.length > 0){
+if (localStorage.length > 0) {
   for (let event in localStorage) {
     let val = localStorage.getItem(event);
-    if(typeof(val) === 'string')
-    eventData.push(
-       {name:event, startTime:val}
-     )
+    if (typeof val === "string")
+      eventData.push({ name: event, startTime: val });
   }
 }
 
@@ -58,17 +56,20 @@ export function Content() {
   const loadNextScheduleItem = () => {
     let currentKey: Array<any> = Array.from(selectedEvent.keys.keys.values());
     let newKey = currentKey[0] + 1;
-    if (newKey < eventDP.current.data.length){
-    setSelectedEvent(new KeySetImpl([newKey]));
-    }else {
+    if (newKey < eventDP.current.data.length) {
+      setSelectedEvent(new KeySetImpl([newKey]));
+    } else {
       setAutoLoad(false);
       setSelectedEvent(new KeySetImpl([]));
     }
   };
   const importSchedule = () => {
     let newSchedule = JSON.parse(scheduleValue);
-    for(let event in newSchedule){      
-      localStorage.setItem(newSchedule[event].name,newSchedule[event].startTime)
+    for (let event in newSchedule) {
+      localStorage.setItem(
+        newSchedule[event].name,
+        newSchedule[event].startTime
+      );
     }
     eventDP.current.data = newSchedule;
   };
@@ -83,17 +84,17 @@ export function Content() {
     let tempName = eventNameVal;
     let tempStart = startTimeVal;
     let tempArray = [...eventDP.current.data];
-    let exists = tempArray.find(event=>event.name === eventNameVal)
-    if(!exists){
-    let startParts = tempStart.split(" ");
-    let finalStart = startParts.toString().replace(",", "T");
-    console.log("name: " + tempName + " : " + finalStart);
+    let exists = tempArray.find((event) => event.name === eventNameVal);
+    if (!exists) {
+      let startParts = tempStart.split(" ");
+      let finalStart = startParts.toString().replace(",", "T");
+      console.log("name: " + tempName + " : " + finalStart);
 
-    tempArray.push({ name: tempName, startTime: finalStart });
-    localStorage.setItem(tempName, finalStart)
-    eventDP.current.data = tempArray;
-    }else{
-      alert('name already exists, please use a different event name.')
+      tempArray.push({ name: tempName, startTime: finalStart });
+      localStorage.setItem(tempName, finalStart);
+      eventDP.current.data = tempArray;
+    } else {
+      alert("name already exists, please use a different event name.");
     }
   };
 
@@ -132,7 +133,7 @@ export function Content() {
     (event: ojListView.selectedChanged<Event["name"], Event>) => {
       console.log("Selected: ", event.detail.value);
       if (event.detail.updatedFrom === "internal") {
-         setSelectedEvent(event.detail.value);
+        setSelectedEvent(event.detail.value);
       }
     },
     [selectedEvent]
@@ -223,23 +224,24 @@ export function Content() {
           <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center oj-typography-heading-md orbr-event-container">
             <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-time-text-label">
               COUNTDOWN TO:
-              </div>
+            </div>
             <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-time-text-hero-label">
               {name}
             </div>
             <Counter
               targetTime={eventTime}
               autoLoad={autoLoad}
-              loadNext={loadNextScheduleItem}/>
+              loadNext={loadNextScheduleItem}
+            />
             <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-time-text-hero-label">
-            {/* <div
+              {/* <div
               role="img"
               class="oj-flex oj-flex-item oj-icon oj-sm-align-items-centre orbr-line-icon"
               title="line"
               alt="lineBreak"
             ></div> */}
-            <Time localTime={timeNow} />
-          </div>
+              <Time localTime={timeNow} />
+            </div>
           </div>
           {/* <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-clock-container">
             <Time localTime={timeNow} />
@@ -257,27 +259,25 @@ export function Content() {
           {/* <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center">
             <Counter targetTime={eventTime} />
           </div> */}
-          
         </div>
 
         {/* 8 column panel for video or other content */}
         <div class="oj-flex-item oj-sm-9">
           {/* Add content for the right side panel inside of the below <div> */}
-          <div class="oj-flex orbr-video-container">          
+          <div class="oj-flex orbr-video-container"></div>
+          <div class="oj-flex-item oj-typography-subheading-md oj-flex-bar oj-color-invert footer">
+            <div class="oj-flex-bar-end">
+              <span class="o-text">POWERED BY</span>
+              <button class="addbtn2" onClick={open}>
+                <div
+                  role="img"
+                  class="oj-icon orbr-oracle-icon"
+                  title="oracle logo"
+                  alt="Oracle logo"
+                ></div>
+              </button>
+            </div>
           </div>
-          <div class="oj-flex-item oj-typography-subheading-md oj-flex-bar oj-color-invert">
-          <div class="oj-flex-bar-end">
-            <span class="o-text" >POWERED BY</span>
-            <button class="addbtn2" onClick={open}>
-            <div
-              role="img"
-              class="oj-icon orbr-oracle-icon"
-              title="oracle logo"
-              alt="Oracle logo"
-            ></div>
-            </button>
-          </div>
-        </div>
         </div>
         {/* <div class="oj-flex-item oj-typography-subheading-md oj-flex-bar oj-color-invert oj-sm-margin-2x-top">
           <div class="oj-flex-bar-end">
