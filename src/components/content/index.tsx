@@ -21,6 +21,15 @@ type Event = {
 };
 
 let eventData = [];
+if(localStorage.length > 0){
+  for (let event in localStorage) {
+    let val = localStorage.getItem(event);
+    if(typeof(val) === 'string')
+    eventData.push(
+       {name:event, startTime:val}
+     )
+  }
+}
 
 export function Content() {
   const eventDP = useRef(
@@ -58,6 +67,9 @@ export function Content() {
   };
   const importSchedule = () => {
     let newSchedule = JSON.parse(scheduleValue);
+    for(let event in newSchedule){      
+      localStorage.setItem(newSchedule[event].name,newSchedule[event].startTime)
+    }
     eventDP.current.data = newSchedule;
   };
 
@@ -78,6 +90,7 @@ export function Content() {
     console.log("name: " + tempName + " : " + finalStart);
 
     tempArray.push({ name: tempName, startTime: finalStart });
+    localStorage.setItem(tempName, finalStart)
     eventDP.current.data = tempArray;
     }else{
       alert('name already exists, please use a different event name.')
@@ -157,6 +170,7 @@ export function Content() {
       setSelectedEvent(null);
     }
     eventDP.current.data = tempArray;
+    localStorage.removeItem(removedEvent);
   };
 
   const listItemTemplate = (
