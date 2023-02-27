@@ -186,7 +186,7 @@ export function Content() {
       // outer container
       <div class="oj-flex oj-sm-flex-direction-row oj-sm-12 orbr-content-container">
         {/* 4 column panel for times and event data */}
-        <div class="oj-flex-item oj-flex oj-sm-flex-direction-column oj-sm-4 orbr-event-panel">
+        <div class="oj-flex-item oj-flex oj-sm-flex-direction-column oj-sm-3 oj-sm-margin-2x-left orbr-event-panel">
           <div class="oj-flex-item oj-sm-align-items-center">
             <div
               role="img"
@@ -195,10 +195,31 @@ export function Content() {
               alt="Tag Heuer logo"
             ></div>
           </div>
-          <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-clock-container">
+          <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center oj-typography-heading-md orbr-event-container">
+            <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-time-text-label">
+              COUNTDOWN TO:
+              </div>
+            <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-time-text-hero-label">
+              {name}
+            </div>
+            <Counter
+              targetTime={eventTime}
+              autoLoad={autoLoad}
+              loadNext={loadNextScheduleItem}/>
+            <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-time-text-hero-label">
+            {/* <div
+              role="img"
+              class="oj-flex oj-flex-item oj-icon oj-sm-align-items-centre orbr-line-icon"
+              title="line"
+              alt="lineBreak"
+            ></div> */}
             <Time localTime={timeNow} />
           </div>
-          <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center oj-typography-heading-md orbr-event-container">
+          </div>
+          {/* <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-clock-container">
+            <Time localTime={timeNow} />
+          </div> */}
+          {/* <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center oj-typography-heading-md orbr-event-container">
             <div>
               COUNTDOWN TO <i>{name} :</i>
             </div>
@@ -207,18 +228,35 @@ export function Content() {
               autoLoad={autoLoad}
               loadNext={loadNextScheduleItem}
             />
-          </div>
+          </div> */}
           {/* <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center">
             <Counter targetTime={eventTime} />
           </div> */}
+          
         </div>
 
         {/* 8 column panel for video or other content */}
-        <div class="oj-flex-item oj-sm-8">
+        <div class="oj-flex-item oj-sm-9">
           {/* Add content for the right side panel inside of the below <div> */}
-          <div class="orbr-video-container"></div>
+          <div class="orbr-video-container">
+
+            
+          </div>
+          <div class="oj-flex-item oj-typography-subheading-md oj-flex-bar oj-color-invert oj-sm-margin-2x-top">
+          <div class="oj-flex-bar-end">
+            <span class="o-text" >POWERED BY</span>
+            <button class="addbtn2" onClick={open}>
+            <div
+              role="img"
+              class="oj-icon orbr-oracle-icon"
+              title="oracle logo"
+              alt="Oracle logo"
+            ></div>
+            </button>
+          </div>
         </div>
-        <div class="oj-flex-item oj-typography-subheading-md oj-flex-bar oj-color-invert oj-sm-margin-2x-top">
+        </div>
+        {/* <div class="oj-flex-item oj-typography-subheading-md oj-flex-bar oj-color-invert oj-sm-margin-2x-top">
           <div class="oj-flex-bar-end">
             POWERED BY
             <div
@@ -228,7 +266,7 @@ export function Content() {
               alt="Oracle logo"
             ></div>
           </div>
-        </div>
+        </div> */}
 
         {/* event configuration drawer */}
         <span>
@@ -332,9 +370,9 @@ export function Content() {
           </oj-drawer-popup>
         </span>
       </div>
-      <button class="addbtn" onClick={open}>
+      {/* <button class="addbtn" onClick={open}>
         <div class="orbr-settings-ico oj-ux-ico-settings"></div>
-      </button>
+      </button> */}
     </>
   );
 }
