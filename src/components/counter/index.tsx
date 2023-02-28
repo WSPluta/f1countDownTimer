@@ -77,7 +77,11 @@ export function Counter(props: Props) {
       <div class="oj-sm-justify-content-center orbr-counter-text">
         {hours} : {minutes} : {seconds}
       </div>
-      <div class="oj-sm-justify-content-center orbr-counter-label">HR  MIN SEC</div>
+      <div class="oj-flex-bar oj-sm-justify-content-center orbr-counter-label">
+        <div class="oj-flex-bar-start" style="margin-left: 24px;">HR</div>
+        <div class="oj-flex-bar-middle oj-sm-justify-content-center">MIN</div>
+        <div class="oj-flex-bar-end" style="margin-right: 24px;">SEC</div>
+      </div>
     </div>
   );
 }

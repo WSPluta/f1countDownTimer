@@ -145,7 +145,7 @@ button.addbtn2:focus-visible {
 .orbr-event-panel {
   /* border: 0.21rem solid var(--orbr-neutral20); */
   /* border-radius: 34px; */
-  max-width: 500px !important;
+  max-width: 25% !important;
   height: 100vh;
   padding-bottom:75px;
   /* margin-left: 0.89rem; */
@@ -169,7 +169,7 @@ button.addbtn2:focus-visible {
 .orbr-time-text-hero-label {
   font-style: small;
   color: var(--orbr-neutral20);
-  letter-spacing: 0.3rem;
+  letter-spacing: 0.rem;
   text-transform: uppercase;
   font-family: sans-serif;
   padding-top: 0.5rem;
@@ -235,7 +235,7 @@ button.addbtn2:focus-visible {
   /* margin-left:83px; */
   color: var(--orbr-neutral20);
   font-family: sans-serif;
-  word-spacing: 2.5rem;
+  /* word-spacing: 2.5rem; */
   font-size: small;
 }
 .orbr-counter-container {
