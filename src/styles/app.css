@@ -33,7 +33,7 @@ button.addbtn {
   width: 50px;
   height: 50px;
   background-color: var(--orbr-oracle);
-  /* border-radius: 50%; */
+
   box-shadow: 0 6px 10px 0 #666;
 
   font-size: 50px;
@@ -67,21 +67,7 @@ button.addbtn2 {
 }
 
 .addbtn2 {
-  /* width: 50px;
-  height: 50px; */
   background-color: var(--rbr-blue);
-  /* border-radius: 50%; */
-  /* box-shadow: 0 6px 10px 0 #666; */
-
-  /* font-size: 50px;
-  line-height: 50px;
-  color: white;
-  text-align: center; */
-
-  /* position: fixed;
-  right: 25px;
-  bottom: 75px; */
-
   transition: all 0.1s ease-in-out;
 }
 
@@ -104,9 +90,6 @@ button.addbtn2:focus-visible {
 }
 .orbr-content-container {
   min-height: 100vh;
-  /* padding-bottom: 25px; */
-  /* margin-top: 40px;
-  margin-bottom: 40px; */
 }
 
 .orbr-listview-sizing {
@@ -114,20 +97,11 @@ button.addbtn2:focus-visible {
 }
 
 .orbr-clock-container {
-  /* border-top: 0.13rem solid var(--orbr-neutral20);
-  border-bottom: 0.13rem solid var(--orbr-neutral20); */
   color: var(--orbr-neutral20);
-  /* margin-left: -0.5rem; */
-  /* margin-right: -0.5rem; */
-  /* margin-top: 15px; */
-  /* margin-bottom: -50px; */
   text-align: center;
 }
 .orbr-event-container {
-  /* border-top: 0.21rem solid var(--orbr-neutral20); */
   color: var(--orbr-neutral20);
-  /* margin-top: 0.5rem; */
-  /* padding-left: 8px; */
   margin: auto;
   text-align: center;
 }
@@ -143,33 +117,29 @@ button.addbtn2:focus-visible {
 }
 
 .orbr-event-panel {
-  /* border: 0.21rem solid var(--orbr-neutral20); */
-  /* border-radius: 34px; */
   max-width: 25% !important;
   height: 100vh;
   padding-bottom:75px;
-  /* margin-left: 0.89rem; */
 }
 
 .orbr-video-container {
   color: var(--orbr-neutral20);
-  /* margin: auto; */
   padding-bottom: 75px;
   width: 100%;
   min-height: 100vh;
-  /* border: 1px solid var(--orbr-neutral20); */
 }
 
 .orbr-time-text-clock {
   font-style: normal;
   font-family: sans-serif;
   letter-spacing: 0.01rem;
+  font-size: 0.89vw;
 }
 
 .orbr-time-text-hero-label {
-  font-style: small;
+  font-size: 1.44vw;
   color: var(--orbr-neutral20);
-  letter-spacing: 0.rem;
+  letter-spacing: 0.1rem;
   text-transform: uppercase;
   font-family: sans-serif;
   padding-top: 0.5rem;
@@ -178,16 +148,15 @@ button.addbtn2:focus-visible {
 .orbr-time-text-label {
   font-style: normal;
   font-family: sans-serif;
-  font-size: small;
+  font-size: 0.34vw;
   letter-spacing: 0.1rem;
 }
 
 .orbr-time-text-label2 {
   font-style: normal;
   font-family: sans-serif;
-  font-size: small;
+  font-size: 0.34vw;
   letter-spacing: 0.1rem;
-  margin-top: 10rem;
 }
 
 .orbr-drawer-end {
@@ -206,17 +175,12 @@ button.addbtn2:focus-visible {
 
 .orbr-counter-text {
   color: var(--orbr-neutral20);
-  /* margin-top:15px;
-  margin-bottom:-50px; */
   text-align: center;
   word-spacing: 1rem;
+  font-size: 1.44vw;
 }
 
 .orbr-time-text {
-  /* margin-top: 13px;
-  padding-left: 8px;
-  margin-bottom: -50px; */
-  /* border-top: 0.21rem solid var(--orbr-neutral20); */
   font-style: italic;
 }
 
@@ -232,20 +196,16 @@ button.addbtn2:focus-visible {
 }
 
 .orbr-counter-label {
-  /* margin-left:83px; */
   color: var(--orbr-neutral20);
   font-family: sans-serif;
-  /* word-spacing: 2.5rem; */
   font-size: small;
 }
 .orbr-counter-container {
-  /* height: 75vh;
-    margin-left: 1%; */
 }
 
 .orbr-tag-icon {
-  width: 300px;
-  height: 95%;
+  width: 89%;
+  height: 89%;
   margin: auto;
   padding-top: 20px;
   margin-bottom: -70px;
@@ -253,7 +213,6 @@ button.addbtn2:focus-visible {
 }
 
 .orbr-tag-icon:before {
-  /* content:url("images/TAG_Heuer_Logo.png") */
 }
 
 html:not([dir="rtl"]) .orbr-tag-icon {
@@ -269,14 +228,12 @@ html[dir="rtl"] .orbr-tag-icon {
 }
 
 .orbr-oracle-icon {
-  /* margin-top: 8px; */
   width: 300px;
   height: 37px;
   content: url(images/Oracle-WhiteLogo.svg);
 }
 
 .orbr-oracle-icon:before {
-  /* content:url("images/TAG_Heuer_Logo.png") */
 }
 
 html:not([dir="rtl"]) .orbr-oracle-icon {
@@ -296,5 +253,4 @@ html[dir="rtl"] .orbr-oracle-icon {
   width: 300px;
   height: 2px;
   content: url(images/line.png);
-  /* padding-top: 0.3rem; */
 }
