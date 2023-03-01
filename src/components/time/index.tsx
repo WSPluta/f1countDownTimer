@@ -3,7 +3,6 @@ import { useEffect } from "preact/hooks";
 
 type Props = {
   localTime: Date;
-  onUpdate: (time) => void;
 };
 
 export function Time(props: Props) {
@@ -21,13 +20,6 @@ export function Time(props: Props) {
     return dateObj.toLocaleTimeString(navigator.language, options);
   };
 
-  /** One timer with one setInterval controls the current time for the clock and countdown.
-   * This keeps the two timed events synchronized
-   */
-  useEffect(() => {
-    let timer = setInterval(() => props.onUpdate(Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
 
   return (
     <div class="oj-flex oj-sm-flex-direction-column oj-typography-subheading-xl oj-sm-align-items-start orbr-time-text">
