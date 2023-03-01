@@ -11,10 +11,11 @@ type Props = {
   targetTime: Date;
   loadNext: () => void;
   autoLoad: boolean;
+  currentTime:Date;
 };
 
-const getTimeRemaining = (targetTime) => {
-  const total = Date.parse(targetTime) - Date.parse(new Date().toISOString());
+const getTimeRemaining = (targetTime, currentTime) => {
+  const total = Date.parse(targetTime) - Date.parse(new Date(currentTime).toISOString());
   if (total < 0) {
     return {
       total: 0,
@@ -40,7 +41,7 @@ const getTimeRemaining = (targetTime) => {
 
 export function Counter(props: Props) {
   const initClock = useMemo(() => {
-    return getTimeRemaining(props.targetTime);
+    return getTimeRemaining(props.targetTime,props.currentTime);
   }, [props.targetTime]);
 
   const [hours, setHours] = useState<string>(initClock.hours.padStart(2, "0"));
@@ -52,13 +53,11 @@ export function Counter(props: Props) {
   );
 
   useEffect(() => {
-    const timeinterval = setInterval(() => {
-      const t = getTimeRemaining(props.targetTime);
+      const t = getTimeRemaining(props.targetTime,props.currentTime);
       setHours(t.hours.padStart(2, "0"));
       setMinutes(t.minutes.padStart(2, "0"));
       setSeconds(t.seconds.padStart(2, "0"));
       if (t.total <= 0) {
-        clearInterval(timeinterval);
         setHours("00");
         setMinutes("00");
         setSeconds("00");
@@ -66,11 +65,7 @@ export function Counter(props: Props) {
           props.loadNext();
         }
       }
-    }, 1000);
-    return () => {
-      clearInterval(timeinterval);
-    };
-  }, [props.targetTime,props.autoLoad]);
+  }, [props.targetTime,props.autoLoad, props.currentTime]);
 
   return (
     <div class="oj-typography-heading-2xl oj-sm-align-items-center oj-sm-justify-content-center">

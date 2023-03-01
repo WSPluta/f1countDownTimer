@@ -12,8 +12,7 @@ import "ojs/ojlistview";
 import { ojListView } from "ojs/ojlistview";
 import { ojSwitch } from "ojs/ojswitch";
 import { ojInputText, ojTextArea } from "ojs/ojinputtext";
-import { KeySet, KeySetImpl } from "ojs/ojkeyset";
-import { FetchByKeysParameters } from "@oracle/oraclejet/ojdataprovider";
+import { KeySetImpl } from "ojs/ojkeyset";
 
 type Event = {
   name: string;
@@ -98,8 +97,12 @@ export function Content() {
     }
   };
 
-  //TODO
-  const [timeNow, setTimeNow] = useState<Date>(new Date(Date.now()));
+  /** this state variable holds the master time for both countdown and local clock */
+  const [timeNow, setTimeNow] = useState<Date>(new Date());
+
+  const updateTime = (time) => {
+    setTimeNow(new Date(time))
+  }
   const endToggle = () => {
     endOpened ? setEndOpened(false) : setEndOpened(true);
   };
@@ -150,7 +153,6 @@ export function Content() {
         setName(data.name);
         setEventTime(new Date(data.startTime));
       } else {
-        //setSelectedEvent(new KeySetImpl([]));
         setName("No Event");
         setEventTime(new Date("2022-12-25 00:00:00"));
       }
@@ -209,7 +211,6 @@ export function Content() {
 
   return (
     <>
-      {/* // outer container */}
       <div class="oj-flex oj-sm-flex-direction-row oj-sm-12 orbr-content-container">
         {/* 4 column panel for times and event data */}
         <div class="oj-flex-item oj-flex oj-sm-flex-direction-column oj-sm-4 oj-sm-margin-2x-left orbr-event-panel">
@@ -230,35 +231,14 @@ export function Content() {
             </div>
             <Counter
               targetTime={eventTime}
+              currentTime={timeNow}
               autoLoad={autoLoad}
               loadNext={loadNextScheduleItem}
             />
             <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-time-text-hero-label">
-              {/* <div
-              role="img"
-              class="oj-flex oj-flex-item oj-icon oj-sm-align-items-centre orbr-line-icon"
-              title="line"
-              alt="lineBreak"
-            ></div> */}
-              <Time localTime={timeNow} />
+              <Time localTime={timeNow} onUpdate={updateTime} />
             </div>
           </div>
-          {/* <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-clock-container">
-            <Time localTime={timeNow} />
-          </div> */}
-          {/* <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center oj-typography-heading-md orbr-event-container">
-            <div>
-              COUNTDOWN TO <i>{name} :</i>
-            </div>
-            <Counter
-              targetTime={eventTime}
-              autoLoad={autoLoad}
-              loadNext={loadNextScheduleItem}
-            />
-          </div> */}
-          {/* <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center">
-            <Counter targetTime={eventTime} />
-          </div> */}
         </div>
 
         {/* 8 column panel for video or other content */}
@@ -279,19 +259,6 @@ export function Content() {
             </div>
           </div>
         </div>
-        {/* <div class="oj-flex-item oj-typography-subheading-md oj-flex-bar oj-color-invert oj-sm-margin-2x-top">
-          <div class="oj-flex-bar-end">
-            POWERED BY
-            <div
-              role="img"
-              class="oj-icon orbr-oracle-icon"
-              title="oracle logo"
-              alt="Oracle logo"
-            ></div>
-          </div>
-        </div> */}
-
-        {/* event configuration drawer */}
         <span>
           <oj-drawer-popup
             class="orbr-drawer-end"
@@ -395,9 +362,6 @@ export function Content() {
           </oj-drawer-popup>
         </span>
       </div>
-      {/* <button class="addbtn" onClick={open}>
-        <div class="orbr-settings-ico oj-ux-ico-settings"></div>
-      </button> */}
     </>
   );
 }
