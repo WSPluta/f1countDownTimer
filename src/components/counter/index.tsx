@@ -69,13 +69,41 @@ export function Counter(props: Props) {
 
   return (
     <div class="oj-typography-heading-2xl oj-sm-align-items-center oj-sm-justify-content-center">
-      <div class="oj-sm-justify-content-center orbr-counter-text">
-        {hours} : {minutes} : {seconds}
+      <div class="oj-flex oj-sm-12 oj-sm-justify-content-center" >
+        {/* 5 column panel for spacing */}
+        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center orbr-counter-text" >       
+          {hours}
+        </div>
+        <div class="oj-flex-item oj-sm-1 oj-sm-align-items-center orbr-counter-text-colon" >
+          :
+        </div>
+        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center orbr-counter-text" >       
+          {minutes}
+        </div>
+        <div class="oj-flex-item oj-sm-1 oj-sm-align-items-center orbr-counter-text-colon">
+          :
+        </div>
+        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center orbr-counter-text" >       
+        {seconds}
+        </div>
       </div>
-      <div class="oj-flex-bar oj-sm-justify-content-center orbr-counter-label">
-        <div class="oj-flex-bar-start" style="margin-left: 24px;">HR</div>
-        <div class="oj-flex-bar-middle oj-sm-justify-content-center">MIN</div>
-        <div class="oj-flex-bar-end" style="margin-right: 24px;">SEC</div>
+      <div class="oj-flex oj-sm-12 oj-sm-justify-content-center" >
+        {/* 5 column panel for spacing */}
+        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center orbr-counter-label" >       
+          HR
+        </div>
+        <div class="oj-flex-item oj-sm-1 oj-sm-align-items-center orbr-counter-text" >
+          
+        </div>
+        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center orbr-counter-label" >       
+          MIN
+        </div>
+        <div class="oj-flex-item oj-sm-1 oj-sm-align-items-center orbr-counter-label">
+          
+        </div>
+        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center orbr-counter-label" >       
+        SEC
+        </div>
       </div>
     </div>
   );

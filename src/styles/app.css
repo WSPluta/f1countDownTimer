@@ -7,7 +7,7 @@
 */
 
 :root {
-  --rbr-blue: #001a30;
+  --rbr-blue: #0D1F30;
   --rbr-red: #ea1d2d;
   --rbr-yellow: #fcd700;
   --rbr-grey: #a8a9ac;
@@ -64,6 +64,7 @@ button.addbtn:focus-visible {
 
 button.addbtn2 {
   border: none;
+  outline: none;
 }
 
 .addbtn2 {
@@ -82,7 +83,7 @@ button.addbtn2__content:focus {
   outline: none;
 }
 button.addbtn2:focus-visible {
-  outline: dotted black;
+  outline: none;
 }
 
 .orbr-settings-ico {
@@ -107,8 +108,9 @@ button.addbtn2:focus-visible {
 }
 
 .footer {
-  height: 37px;
-  margin-top: -50px;
+  height: 100px;
+  margin-top: -110px;
+  margin-right: 50px;
 }
 
 .p {
@@ -120,6 +122,7 @@ button.addbtn2:focus-visible {
   max-width: 25% !important;
   height: 100vh;
   padding-bottom:75px;
+  padding-left: 4vw;
 }
 
 .orbr-video-container {
@@ -133,11 +136,11 @@ button.addbtn2:focus-visible {
   font-style: normal;
   font-family: sans-serif;
   letter-spacing: 0.01rem;
-  font-size: 0.89vw;
+  font-size: calc(10px + 0.75vw);
 }
 
 .orbr-time-text-hero-label {
-  font-size: 1.44vw;
+  font-size: calc(10px + 1.0vw);
   color: var(--orbr-neutral20);
   letter-spacing: 0.1rem;
   text-transform: uppercase;
@@ -148,14 +151,14 @@ button.addbtn2:focus-visible {
 .orbr-time-text-label {
   font-style: normal;
   font-family: sans-serif;
-  font-size: 0.34vw;
+  font-size: calc(10px + 0.75vw);
   letter-spacing: 0.1rem;
 }
 
 .orbr-time-text-label2 {
   font-style: normal;
   font-family: sans-serif;
-  font-size: 0.34vw;
+  font-size: calc(10px + 0.75vw);
   letter-spacing: 0.1rem;
 }
 
@@ -177,7 +180,18 @@ button.addbtn2:focus-visible {
   color: var(--orbr-neutral20);
   text-align: center;
   word-spacing: 1rem;
-  font-size: 1.44vw;
+  font-size: calc(20px + 1.5vw);
+  display: flex;
+  justify-content: center;
+}
+
+.orbr-counter-text-colon {
+  color: var(--orbr-neutral20);
+  text-align: center;
+  word-spacing: 1rem;
+  font-size: calc(20px + 0.5vw);
+  display: flex;
+  justify-content: center;
 }
 
 .orbr-time-text {
@@ -187,7 +201,7 @@ button.addbtn2:focus-visible {
 .o-text {
   font-family: sans-serif;
   font-style: normal;
-  font-weight: 200;
+  font-weight: 550;
   font-size: small;
 }
 
@@ -207,7 +221,7 @@ button.addbtn2:focus-visible {
   width: 89%;
   height: 89%;
   margin: auto;
-  padding-top: 20px;
+  padding-top: 10vh;
   margin-bottom: -70px;
   content: url(images/TAG_Heuer_Logo.svg);
 }
@@ -228,9 +242,9 @@ html[dir="rtl"] .orbr-tag-icon {
 }
 
 .orbr-oracle-icon {
-  width: 300px;
-  height: 37px;
-  content: url(images/Oracle-WhiteLogo.svg);
+  width: 719px;
+  height: 100px;
+  content: url(images/Powered_By_Oracle_Cloud_Logo_RGB_White-01.png);
 }
 
 .orbr-oracle-icon:before {
@@ -249,8 +263,9 @@ html[dir="rtl"] .orbr-oracle-icon {
 }
 
 .orbr-line-icon {
-  margin-top: 13px;
+  margin-top: 3.5vh;
   width: 300px;
   height: 2px;
   content: url(images/line.png);
+  margin-bottom: 2.5vh;
 }
