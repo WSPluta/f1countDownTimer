@@ -20,17 +20,33 @@ type Event = {
 };
 
 let eventData = [];
+
+
+const sortEvents = (events) => {
+  let data = events.sort((a,b)=>{
+    if(a.startTime < b.startTime) return -1;
+  })
+  return data
+}
+
+
 if (localStorage.length > 0) {
   for (let event in localStorage) {
     let val = localStorage.getItem(event);
     if (typeof val === "string")
       eventData.push({ name: event, startTime: val });
   }
+  eventData = sortEvents(eventData);
 }
+
+const getCleanEventName = (name) => {
+  let parts = name.split("-");
+  return parts[0];
+};
 
 export function Content() {
   const eventDP = useRef(
-    new MutableArrayDataProvider<Event["name"], Event>(eventData)
+    new MutableArrayDataProvider<Event["name"], Event>(eventData,{implicitSort:[{ attribute: 'startTime', direction: 'ascending' }]})
   );
 
   const [eventTime, setEventTime] = useState<Date>(
@@ -62,14 +78,19 @@ export function Content() {
       setSelectedEvent(new KeySetImpl([]));
     }
   };
+
   const importSchedule = () => {
     let newSchedule = JSON.parse(scheduleValue);
+    let count = 0;
     for (let event in newSchedule) {
+      newSchedule[event].name = newSchedule[event].name + "-" + count;
       localStorage.setItem(
         newSchedule[event].name,
         newSchedule[event].startTime
       );
+      count++;
     }
+    newSchedule = sortEvents(newSchedule);
     eventDP.current.data = newSchedule;
   };
 
@@ -79,27 +100,25 @@ export function Content() {
   const updateStartTimeVal = (event: ojInputText.valueChanged) => {
     setStartTimeVal(event.detail.value);
   };
+
   const addEvent = () => {
     let tempName = eventNameVal;
     let tempStart = startTimeVal;
     let tempArray = [...eventDP.current.data];
-    let exists = tempArray.find((event) => event.name === eventNameVal);
-    if (!exists) {
-      let startParts = tempStart.split(" ");
-      let finalStart = startParts.toString().replace(",", "T");
-      console.log("name: " + tempName + " : " + finalStart);
+    let startParts = tempStart.split(" ");
+    let finalStart = startParts.toString().replace(",", "T");
+    tempName = tempName += '-' + tempArray.length+1
+    console.log("name: " + tempName + " : " + finalStart);
 
-      tempArray.push({ name: tempName, startTime: finalStart });
-      localStorage.setItem(tempName, finalStart);
-      eventDP.current.data = tempArray;
-    } else {
-      alert("name already exists, please use a different event name.");
-    }
+    tempArray.push({ name: tempName, startTime: finalStart });
+    localStorage.setItem(tempName, finalStart);
+    tempArray = sortEvents(tempArray);
+    eventDP.current.data = tempArray;
   };
 
   /** this state variable holds the master time for both countdown and local clock */
   const [timeNow, setTimeNow] = useState<Date>(new Date());
-  
+
   /** One timer with one setInterval controls the current time for the clock and countdown.
    * This keeps the two timed events synchronized
    */
@@ -115,7 +134,7 @@ export function Content() {
     setEndOpened(true);
   };
 
-  const formatDate = (data) => {
+  const formatDate = useCallback((data) => {
     let dateObj = new Date(data);
     let options: Intl.DateTimeFormatOptions = {
       weekday: "long",
@@ -131,7 +150,7 @@ export function Content() {
       locale ? navigator.language : "en-US",
       options
     );
-  };
+  }, []);
 
   const updateLocale = (event: ojSwitch.valueChanged) => {
     setLocale(event.detail.value);
@@ -155,7 +174,7 @@ export function Content() {
       let tempData = [...eventDP.current.data];
       if (key.length > 0) {
         let data = tempData[key[0]];
-        setName(data.name);
+        setName(getCleanEventName(data.name));
         setEventTime(new Date(data.startTime));
       } else {
         setName("No Event");
@@ -165,8 +184,8 @@ export function Content() {
   }, [selectedEvent]);
 
   const deleteEvent = (event) => {
-    let removedEvent = event.target.id;
     let tempArray = [];
+    let removedEvent = event.target.id;
     eventDP.current.data.filter((event) => {
       if (event.name !== removedEvent) {
         tempArray.push({ name: event.name, startTime: event.startTime });
@@ -178,41 +197,43 @@ export function Content() {
       setSelectedEvent(null);
     }
     eventDP.current.data = tempArray;
-    localStorage.removeItem(removedEvent);
+    localStorage.removeItem(event.target.id);
   };
 
-  const listItemTemplate = (
-    event: ojListView.ItemTemplateContext<Event["name"], Event>
-  ) => {
-    return (
-      <div class="oj-flex-bar">
-        <div class="oj-flex-bar-start oj-flex oj-sm-flex-direction-column">
-          <div class="oj-flex-item oj-typography-subheading-sm ">
-            {event.data.name}
+  const listItemTemplate = useCallback(
+    (event: ojListView.ItemTemplateContext<Event["name"], Event>) => {
+      return (
+        <div class="oj-flex-bar">
+          <div class="oj-flex-bar-start oj-flex oj-sm-flex-direction-column">
+            <div class="oj-flex-item oj-typography-subheading-sm ">
+              {getCleanEventName(event.data.name)}
+            </div>
+            <div class="oj-flex-item">{formatDate(event.data.startTime)}</div>
           </div>
-          <div class="oj-flex-item">{formatDate(event.data.startTime)}</div>
+          <oj-button
+            display="icons"
+            id={event.data.name}
+            onojAction={deleteEvent}
+            label="Remove"
+            class="oj-flex-bar-end"
+            data-oj-clickthrough="disabled"
+          >
+            <span slot="startIcon" class="oj-ux-ico-close"></span>
+          </oj-button>
         </div>
-        <oj-button
-          display="icons"
-          id={event.data.name}
-          onojAction={deleteEvent}
-          label="Remove"
-          class="oj-flex-bar-end"
-          data-oj-clickthrough="disabled"
-        >
-          <span slot="startIcon" class="oj-ux-ico-close"></span>
-        </oj-button>
-      </div>
-    );
-  };
-  const noDataTemplate = () => {
+      );
+    },
+    []
+  );
+
+  const noDataTemplate = useCallback(() => {
     return (
       <div>
         <h3>No Events available</h3>
         <div>Add an individual event, or import a full schedule below.</div>
       </div>
     );
-  };
+  }, []);
 
   return (
     <>
@@ -241,7 +262,7 @@ export function Content() {
               loadNext={loadNextScheduleItem}
             />
             <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-time-text-hero-label">
-              <Time localTime={timeNow}/>
+              <Time localTime={timeNow} />
             </div>
           </div>
         </div>
