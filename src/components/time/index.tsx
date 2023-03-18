@@ -6,7 +6,6 @@ type Props = {
 };
 
 export function Time(props: Props) {
-
   const formatDate = (data, timezone) => {
     let dateObj = new Date(data);
     let options: Intl.DateTimeFormatOptions = {
@@ -20,7 +19,6 @@ export function Time(props: Props) {
     return dateObj.toLocaleTimeString(navigator.language, options);
   };
 
-
   return (
     <div class="oj-flex oj-sm-flex-direction-column oj-typography-subheading-xl oj-sm-align-items-start orbr-time-text">
       <div class="oj-flex">
@@ -28,14 +26,18 @@ export function Time(props: Props) {
           role="img"
           class="oj-flex oj-flex-item oj-icon oj-sm-align-items-centre orbr-line-icon"
           title="line"
-          alt="lineBreak"></div>
+          alt="lineBreak"
+        ></div>
       </div>
       <div class="oj-flex-item">
         <span class="orbr-time-text-label2"> LOCAL TIME: </span>
       </div>
       <div class="oj-flex-item">
         <span class="orbr-time-text-clock">
-          {formatDate(props.localTime, Intl.DateTimeFormat().resolvedOptions().timeZone)}{" "}
+          {formatDate(
+            props.localTime,
+            Intl.DateTimeFormat().resolvedOptions().timeZone
+          )}{" "}
         </span>
       </div>
     </div>

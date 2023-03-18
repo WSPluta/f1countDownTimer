@@ -11,11 +11,13 @@ type Props = {
   targetTime: Date;
   loadNext: () => void;
   autoLoad: boolean;
-  currentTime:Date;
+  currentTime: Date;
+  onTimeChange: (date: Date) => void;
 };
 
 const getTimeRemaining = (targetTime, currentTime) => {
-  const total = Date.parse(targetTime) - Date.parse(new Date(currentTime).toISOString());
+  const total =
+    Date.parse(targetTime) - Date.parse(new Date(currentTime).toISOString());
   if (total < 0) {
     return {
       total: 0,
@@ -41,7 +43,7 @@ const getTimeRemaining = (targetTime, currentTime) => {
 
 export function Counter(props: Props) {
   const initClock = useMemo(() => {
-    return getTimeRemaining(props.targetTime,props.currentTime);
+    return getTimeRemaining(props.targetTime, props.currentTime);
   }, [props.targetTime]);
 
   const [hours, setHours] = useState<string>(initClock.hours.padStart(2, "0"));
@@ -53,7 +55,8 @@ export function Counter(props: Props) {
   );
 
   useEffect(() => {
-      const t = getTimeRemaining(props.targetTime,props.currentTime);
+    if (props.currentTime) {
+      const t = getTimeRemaining(props.targetTime, props.currentTime);
       setHours(t.hours.padStart(2, "0"));
       setMinutes(t.minutes.padStart(2, "0"));
       setSeconds(t.seconds.padStart(2, "0"));
@@ -65,44 +68,41 @@ export function Counter(props: Props) {
           props.loadNext();
         }
       }
-  }, [props.targetTime,props.autoLoad, props.currentTime]);
+    }
+  }, [props.targetTime, props.autoLoad, props.currentTime]);
 
   return (
     <div class="oj-typography-heading-2xl oj-sm-align-items-center oj-sm-justify-content-center">
-      <div class="oj-flex oj-sm-12 oj-sm-justify-content-center" >
+      <div class="oj-flex oj-sm-12 oj-sm-justify-content-center">
         {/* 5 column panel for spacing */}
-        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center orbr-counter-text" >       
+        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center orbr-counter-text">
           {hours}
         </div>
-        <div class="oj-flex-item oj-sm-1 oj-sm-align-items-center orbr-counter-text-colon" >
+        <div class="oj-flex-item oj-sm-1 oj-sm-align-items-center orbr-counter-text-colon">
           :
         </div>
-        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center orbr-counter-text" >       
+        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center orbr-counter-text">
           {minutes}
         </div>
         <div class="oj-flex-item oj-sm-1 oj-sm-align-items-center orbr-counter-text-colon">
           :
         </div>
-        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center orbr-counter-text" >       
-        {seconds}
+        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center orbr-counter-text">
+          {seconds}
         </div>
       </div>
-      <div class="oj-flex oj-sm-12 oj-sm-justify-content-center" >
+      <div class="oj-flex oj-sm-12 oj-sm-justify-content-center">
         {/* 5 column panel for spacing */}
-        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center orbr-counter-label" >       
+        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center orbr-counter-label">
           HR
         </div>
-        <div class="oj-flex-item oj-sm-1 oj-sm-align-items-center orbr-counter-text" >
-          
-        </div>
-        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center orbr-counter-label" >       
+        <div class="oj-flex-item oj-sm-1 oj-sm-align-items-center orbr-counter-text"></div>
+        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center orbr-counter-label">
           MIN
         </div>
-        <div class="oj-flex-item oj-sm-1 oj-sm-align-items-center orbr-counter-label">
-          
-        </div>
-        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center orbr-counter-label" >       
-        SEC
+        <div class="oj-flex-item oj-sm-1 oj-sm-align-items-center orbr-counter-label"></div>
+        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center orbr-counter-label">
+          SEC
         </div>
       </div>
     </div>

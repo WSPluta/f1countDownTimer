@@ -1,7 +1,13 @@
 import { Counter } from "../counter/index";
 import { Time } from "../time/index";
 import { h } from "preact";
-import { useState, useCallback, useRef, useEffect } from "preact/hooks";
+import {
+  useState,
+  useCallback,
+  useRef,
+  useEffect,
+  useMemo,
+} from "preact/hooks";
 import MutableArrayDataProvider = require("ojs/ojmutablearraydataprovider");
 import "ojs/ojdrawerpopup";
 import "ojs/ojbutton";
@@ -12,7 +18,7 @@ import "ojs/ojlistview";
 import { ojListView } from "ojs/ojlistview";
 import { ojSwitch } from "ojs/ojswitch";
 import { ojInputText, ojTextArea } from "ojs/ojinputtext";
-import { KeySetImpl } from "ojs/ojkeyset";
+import { KeySetImpl, KeySet } from "ojs/ojkeyset";
 
 type Event = {
   name: string;
@@ -21,14 +27,12 @@ type Event = {
 
 let eventData = [];
 
-
 const sortEvents = (events) => {
-  let data = events.sort((a,b)=>{
-    if(a.startTime < b.startTime) return -1;
-  })
-  return data
-}
-
+  let data = events.sort((a, b) => {
+    if (a.startTime < b.startTime) return -1;
+  });
+  return data;
+};
 
 if (localStorage.length > 0) {
   for (let event in localStorage) {
@@ -46,38 +50,25 @@ const getCleanEventName = (name) => {
 
 export function Content() {
   const eventDP = useRef(
-    new MutableArrayDataProvider<Event["name"], Event>(eventData,{implicitSort:[{ attribute: 'startTime', direction: 'ascending' }]})
+    new MutableArrayDataProvider<Event["name"], Event>(eventData, {
+      implicitSort: [{ attribute: "startTime", direction: "ascending" }],
+      keyAttributes: "index",
+    })
   );
 
   const [eventTime, setEventTime] = useState<Date>(
     new Date("2022-12-25 00:00:00")
   );
   const [name, setName] = useState<string>("No Event");
+  const [realName, setRealName] = useState<string>("");
   const [endOpened, setEndOpened] = useState<boolean>(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [firstSelected, setFirstSelected] = useState<any>();
   const [locale, setLocale] = useState<boolean>(false);
   const [autoLoad, setAutoLoad] = useState<boolean>(false);
   const [eventNameVal, setEventNameVal] = useState<string>("");
   const [startTimeVal, setStartTimeVal] = useState<string>("");
   const [scheduleValue, setScheduleValue] = useState<string>("");
-
-  const updateScheduleVal = (event: ojTextArea.valueChanged) => {
-    setScheduleValue(event.detail.value);
-  };
-
-  const updateAutoLoad = (event: ojSwitch.valueChanged) => {
-    setAutoLoad(event.detail.value);
-  };
-  const loadNextScheduleItem = () => {
-    let currentKey: Array<any> = Array.from(selectedEvent.keys.keys.values());
-    let newKey = currentKey[0] + 1;
-    if (newKey < eventDP.current.data.length) {
-      setSelectedEvent(new KeySetImpl([newKey]));
-    } else {
-      setAutoLoad(false);
-      setSelectedEvent(new KeySetImpl([]));
-    }
-  };
 
   const importSchedule = () => {
     let newSchedule = JSON.parse(scheduleValue);
@@ -107,7 +98,7 @@ export function Content() {
     let tempArray = [...eventDP.current.data];
     let startParts = tempStart.split(" ");
     let finalStart = startParts.toString().replace(",", "T");
-    tempName = tempName += '-' + tempArray.length+1
+    tempName = tempName += "-" + tempArray.length + 1;
     console.log("name: " + tempName + " : " + finalStart);
 
     tempArray.push({ name: tempName, startTime: finalStart });
@@ -122,10 +113,15 @@ export function Content() {
   /** One timer with one setInterval controls the current time for the clock and countdown.
    * This keeps the two timed events synchronized
    */
+
   useEffect(() => {
     let timer = setInterval(() => setTimeNow(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
+
+  const timeChangeHandler = (date: Date) => {
+    setTimeNow(date);
+  };
 
   const endToggle = () => {
     endOpened ? setEndOpened(false) : setEndOpened(true);
@@ -166,22 +162,60 @@ export function Content() {
     [selectedEvent]
   );
 
+  const updateScheduleVal = (event: ojTextArea.valueChanged) => {
+    setScheduleValue(event.detail.value);
+  };
+
+  const updateAutoLoad = (event: ojSwitch.valueChanged) => {
+    setAutoLoad(event.detail.value);
+  };
+  const loadNextScheduleItem = async () => {
+    let idx = await eventDP.current.data.findIndex(
+      (item) => item.name === realName
+    );
+    let data = await eventDP.current.fetchByOffset({
+      offset: 0,
+    });
+    if (idx + 1 < eventDP.current.data.length) {
+      let newKey = data.results[idx + 1].metadata.key;
+      setSelectedEvent(new KeySetImpl([newKey]));
+    } else {
+      setAutoLoad(false);
+      setSelectedEvent(new KeySetImpl([]));
+    }
+  };
+
   useEffect(() => {
     if (selectedEvent) {
       let key: Array<string> = Array.from(
         (selectedEvent as KeySetImpl<Event["name"]>).keys.keys.values()
       );
-      let tempData = [...eventDP.current.data];
       if (key.length > 0) {
-        let data = tempData[key[0]];
-        setName(getCleanEventName(data.name));
-        setEventTime(new Date(data.startTime));
+        let data = eventDP.current
+          .fetchByKeys({
+            keys: selectedEvent.values(),
+          })
+          .then((fetchResult) => {
+            const iterator = fetchResult.results.values();
+            const results = Array.from(iterator);
+            const jsonStr = JSON.stringify(results);
+            console.log("data: " + results[0].data);
+            setRealName(results[0].data.name);
+            setName(getCleanEventName(results[0].data.name));
+            setEventTime(new Date(results[0].data.startTime));
+          });
       } else {
+        setRealName("No Event");
         setName("No Event");
         setEventTime(new Date("2022-12-25 00:00:00"));
       }
     }
   }, [selectedEvent]);
+
+  const firstSelectedItemChangedHandler = (event) => {
+    setFirstSelected(event.detail.value);
+    console.log("Item: ", event.detail.value);
+  };
 
   const deleteEvent = (event) => {
     let tempArray = [];
@@ -192,9 +226,10 @@ export function Content() {
       }
     });
     if (tempArray.length === 0) {
+      setRealName("No Event");
       setName("No Event");
       setEventTime(new Date("2022-12-25 00:00:00"));
-      setSelectedEvent(null);
+      setSelectedEvent(new KeySetImpl([]));
     }
     eventDP.current.data = tempArray;
     localStorage.removeItem(event.target.id);
@@ -259,6 +294,7 @@ export function Content() {
               targetTime={eventTime}
               currentTime={timeNow}
               autoLoad={autoLoad}
+              onTimeChange={timeChangeHandler}
               loadNext={loadNextScheduleItem}
             />
             <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-time-text-hero-label">
@@ -331,6 +367,7 @@ export function Content() {
                   gridlines={{ item: "visibleExceptLast" }}
                   selected={selectedEvent}
                   onselectedChanged={selectedChangedHandler}
+                  onfirstSelectedItemChanged={firstSelectedItemChangedHandler}
                   class="orbr-listview-sizing"
                 >
                   <template
@@ -346,7 +383,9 @@ export function Content() {
                     labelHint="Name"
                     value={eventNameVal}
                     clearIcon="conditional"
-                    help={{ instruction: "All event names must be unique" }}
+                    help={{
+                      instruction: "Event names must not contain a dash (-)",
+                    }}
                     onvalueChanged={updateNameVal}
                   ></oj-input-text>
                   <oj-input-text
@@ -370,11 +409,11 @@ export function Content() {
                   <oj-text-area
                     rows={10}
                     labelHint="Schedule"
-                    placeholder='[ {"name": "My event", "startTime":"2023-03-19 14:15:00"} ]'
+                    placeholder='[ {"name": "My event", "startTime":"2023-03-19T14:15:00"} ]'
                     value={scheduleValue}
                     help={{
                       instruction:
-                        'paste array of objects in the format of {"name":"my event", "startTime":"YYYY-MM-DD<space>HH:MM:SS"}',
+                        'paste array of objects in the format of {"name":"my event", "startTime":"YYYY-MM-DDTHH:MM:SS"}',
                     }}
                     onvalueChanged={updateScheduleVal}
                   ></oj-text-area>
