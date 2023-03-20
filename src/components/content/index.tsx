@@ -19,6 +19,7 @@ import { ojListView } from "ojs/ojlistview";
 import { ojSwitch } from "ojs/ojswitch";
 import { ojInputText, ojTextArea } from "ojs/ojinputtext";
 import { KeySetImpl, KeySet } from "ojs/ojkeyset";
+import AsyncRegExpValidator = require("ojs/ojasyncvalidator-regexp");
 
 type Event = {
   name: string;
@@ -48,6 +49,13 @@ const getCleanEventName = (name) => {
   return parts[0];
 };
 
+const validators = [
+  new AsyncRegExpValidator({
+    pattern: "[a-zA-Z0-9_ ]{0,}[^-]",
+    hint: "can not contain a hyphen (-)",
+    messageDetail: "Enter name without hyphen (-)",
+  }),
+];
 export function Content() {
   const eventDP = useRef(
     new MutableArrayDataProvider<Event["name"], Event>(eventData, {
@@ -251,8 +259,7 @@ export function Content() {
             onojAction={deleteEvent}
             label="Remove"
             class="oj-flex-bar-end"
-            data-oj-clickthrough="disabled"
-          >
+            data-oj-clickthrough="disabled">
             <span slot="startIcon" class="oj-ux-ico-close"></span>
           </oj-button>
         </div>
@@ -280,8 +287,7 @@ export function Content() {
               role="img"
               class="oj-flex oj-flex-item oj-icon orbr-tag-icon oj-sm-align-items-centre"
               title="Tag Heuer logo"
-              alt="Tag Heuer logo"
-            ></div>
+              alt="Tag Heuer logo"></div>
           </div>
           <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center oj-typography-heading-md orbr-event-container">
             <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-time-text-label">
@@ -315,8 +321,7 @@ export function Content() {
                   role="img"
                   class="oj-icon orbr-oracle-icon"
                   title="oracle logo"
-                  alt="Oracle logo"
-                ></div>
+                  alt="Oracle logo"></div>
               </button>
             </div>
           </div>
@@ -326,8 +331,7 @@ export function Content() {
             class="orbr-drawer-end"
             edge="end"
             opened={endOpened}
-            autoDismiss="none"
-          >
+            autoDismiss="none">
             <div class="orbr-drawer-container">
               <div class="oj-flex-bar orbr-drawer-header">
                 <h6 class="oj-flex-bar-start">Event Settings</h6>
@@ -336,12 +340,10 @@ export function Content() {
                   display="icons"
                   chroming="borderless"
                   class="oj-flex-bar-end"
-                  onojAction={endToggle}
-                >
+                  onojAction={endToggle}>
                   <span
                     slot="startIcon"
-                    class="oj-ux-ico-close orbr-drawer-text-color"
-                  ></span>
+                    class="oj-ux-ico-close orbr-drawer-text-color"></span>
                   Close
                 </oj-button>
               </div>
@@ -351,14 +353,12 @@ export function Content() {
                     labelHint="Use browser locale"
                     labelEdge="inside"
                     value={locale}
-                    onvalueChanged={updateLocale}
-                  ></oj-switch>
+                    onvalueChanged={updateLocale}></oj-switch>
                   <oj-switch
                     labelHint="Auto-load schedule"
                     labelEdge="inside"
                     value={autoLoad}
-                    onvalueChanged={updateAutoLoad}
-                  ></oj-switch>
+                    onvalueChanged={updateAutoLoad}></oj-switch>
                 </oj-form-layout>
                 <h4>Select active event</h4>
                 <oj-list-view
@@ -368,12 +368,10 @@ export function Content() {
                   selected={selectedEvent}
                   onselectedChanged={selectedChangedHandler}
                   onfirstSelectedItemChanged={firstSelectedItemChangedHandler}
-                  class="orbr-listview-sizing"
-                >
+                  class="orbr-listview-sizing">
                   <template
                     slot="itemTemplate"
-                    render={listItemTemplate}
-                  ></template>
+                    render={listItemTemplate}></template>
                   <template slot="noData" render={noDataTemplate}></template>
                 </oj-list-view>
 
@@ -383,11 +381,11 @@ export function Content() {
                     labelHint="Name"
                     value={eventNameVal}
                     clearIcon="conditional"
+                    validators={validators}
                     help={{
                       instruction: "Event names must not contain a dash (-)",
                     }}
-                    onvalueChanged={updateNameVal}
-                  ></oj-input-text>
+                    onvalueChanged={updateNameVal}></oj-input-text>
                   <oj-input-text
                     labelHint="Start time"
                     placeholder="YYYY-MM-DD HH:MM:SS"
@@ -397,12 +395,10 @@ export function Content() {
                     }}
                     value={startTimeVal}
                     clearIcon="conditional"
-                    onvalueChanged={updateStartTimeVal}
-                  ></oj-input-text>
+                    onvalueChanged={updateStartTimeVal}></oj-input-text>
                   <oj-button
                     onojAction={addEvent}
-                    label="Add event"
-                  ></oj-button>
+                    label="Add event"></oj-button>
                 </oj-form-layout>
                 <oj-form-layout class="oj-sm-margin-4x-top">
                   <h4>Import event schedule</h4>
@@ -415,12 +411,10 @@ export function Content() {
                       instruction:
                         'paste array of objects in the format of {"name":"my event", "startTime":"YYYY-MM-DDTHH:MM:SS"}',
                     }}
-                    onvalueChanged={updateScheduleVal}
-                  ></oj-text-area>
+                    onvalueChanged={updateScheduleVal}></oj-text-area>
                   <oj-button
                     onojAction={importSchedule}
-                    label="Import"
-                  ></oj-button>
+                    label="Import"></oj-button>
                 </oj-form-layout>
               </div>
             </div>
