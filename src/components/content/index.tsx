@@ -72,7 +72,7 @@ export function Content() {
   const [endOpened, setEndOpened] = useState<boolean>(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [locale, setLocale] = useState<boolean>(false);
-  const [autoLoad, setAutoLoad] = useState<boolean>(false);
+  const [autoLoad, setAutoLoad] = useState<boolean>(true);
   const [eventNameVal, setEventNameVal] = useState<string>("");
   const [startTimeVal, setStartTimeVal] = useState<string>("");
   const [scheduleValue, setScheduleValue] = useState<string>("");
@@ -227,6 +227,9 @@ export function Content() {
       setName("No Event");
       setEventTime(new Date("2022-12-25 00:00:00"));
       setSelectedEvent(new KeySetImpl([]));
+    } else {
+      // Load next available event after deleting the current event
+      loadNextScheduleItem();
     }
     eventDP.current.data = tempArray;
     localStorage.removeItem(event.target.id);
