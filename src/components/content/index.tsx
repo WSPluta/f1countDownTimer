@@ -267,6 +267,29 @@ export function Content() {
     );
   }, []);
 
+  const listAreaRef = useRef(null);
+  const drawerPopupRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        listAreaRef.current &&
+        !listAreaRef.current.contains(event.target) &&
+        drawerPopupRef.current &&
+        !drawerPopupRef.current.contains(event.target) &&
+        endOpened
+      ) {
+        setEndOpened(false);
+      }
+    };
+  
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [endOpened]);
+  
+
   return (
     <>
       <div class="oj-flex oj-sm-flex-direction-row oj-sm-12 orbr-content-container">
@@ -305,7 +328,7 @@ export function Content() {
           <div class="oj-flex orbr-video-container"></div>
           <div class="oj-flex-item oj-typography-subheading-md oj-flex-bar oj-color-invert footer">
             <div class="oj-flex-bar-end">
-              <span class="o-text">POWERED BY</span>
+              {/* <span class="o-text">POWERED BY</span> */}
               <button class="addbtn2" onClick={open}>
                 <div
                   role="img"
@@ -319,6 +342,7 @@ export function Content() {
         </div>
         <span>
           <oj-drawer-popup
+            ref={drawerPopupRef}
             class="orbr-drawer-end"
             edge="end"
             opened={endOpened}
@@ -358,6 +382,7 @@ export function Content() {
                 </oj-form-layout>
                 <h4>Select active event</h4>
                 <oj-list-view
+                  ref={listAreaRef}
                   data={eventDP.current}
                   selectionMode="single"
                   gridlines={{ item: "visibleExceptLast" }}
