@@ -79,16 +79,18 @@ export function Content() {
 
   const importSchedule = () => {
     let newSchedule = JSON.parse(scheduleValue);
-    let count = 0;
+    let tempArray = [...eventDP.current.data];
+    let count = eventDP.current.data.length;
     for (let event in newSchedule) {
       newSchedule[event].name = newSchedule[event].name + "-" + count;
       localStorage.setItem(
         newSchedule[event].name,
         newSchedule[event].startTime
       );
+      tempArray.push(newSchedule[event]);
       count++;
     }
-    newSchedule = sortEvents(newSchedule);
+    newSchedule = sortEvents(tempArray);
     eventDP.current.data = newSchedule;
   };
 
@@ -285,13 +287,12 @@ export function Content() {
         setEndOpened(false);
       }
     };
-  
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [endOpened]);
-  
 
   return (
     <>
