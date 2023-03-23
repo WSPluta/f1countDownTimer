@@ -71,7 +71,6 @@ export function Content() {
   const [realName, setRealName] = useState<string>("");
   const [endOpened, setEndOpened] = useState<boolean>(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [firstSelected, setFirstSelected] = useState<any>();
   const [locale, setLocale] = useState<boolean>(false);
   const [autoLoad, setAutoLoad] = useState<boolean>(false);
   const [eventNameVal, setEventNameVal] = useState<string>("");
@@ -126,10 +125,6 @@ export function Content() {
     let timer = setInterval(() => setTimeNow(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
-
-  const timeChangeHandler = (date: Date) => {
-    setTimeNow(date);
-  };
 
   const endToggle = () => {
     endOpened ? setEndOpened(false) : setEndOpened(true);
@@ -206,7 +201,6 @@ export function Content() {
           .then((fetchResult) => {
             const iterator = fetchResult.results.values();
             const results = Array.from(iterator);
-            const jsonStr = JSON.stringify(results);
             console.log("data: " + results[0].data);
             setRealName(results[0].data.name);
             setName(getCleanEventName(results[0].data.name));
@@ -219,11 +213,6 @@ export function Content() {
       }
     }
   }, [selectedEvent]);
-
-  const firstSelectedItemChangedHandler = (event) => {
-    setFirstSelected(event.detail.value);
-    console.log("Item: ", event.detail.value);
-  };
 
   const deleteEvent = (event) => {
     let tempArray = [];
@@ -259,7 +248,8 @@ export function Content() {
             onojAction={deleteEvent}
             label="Remove"
             class="oj-flex-bar-end"
-            data-oj-clickthrough="disabled">
+            data-oj-clickthrough="disabled"
+          >
             <span slot="startIcon" class="oj-ux-ico-close"></span>
           </oj-button>
         </div>
@@ -287,7 +277,8 @@ export function Content() {
               role="img"
               class="oj-flex oj-flex-item oj-icon orbr-tag-icon oj-sm-align-items-centre"
               title="Tag Heuer logo"
-              alt="Tag Heuer logo"></div>
+              alt="Tag Heuer logo"
+            ></div>
           </div>
           <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center oj-typography-heading-md orbr-event-container">
             <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-time-text-label">
@@ -300,7 +291,6 @@ export function Content() {
               targetTime={eventTime}
               currentTime={timeNow}
               autoLoad={autoLoad}
-              onTimeChange={timeChangeHandler}
               loadNext={loadNextScheduleItem}
             />
             <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-time-text-hero-label">
@@ -321,7 +311,8 @@ export function Content() {
                   role="img"
                   class="oj-icon orbr-oracle-icon"
                   title="oracle logo"
-                  alt="Oracle logo"></div>
+                  alt="Oracle logo"
+                ></div>
               </button>
             </div>
           </div>
@@ -331,7 +322,8 @@ export function Content() {
             class="orbr-drawer-end"
             edge="end"
             opened={endOpened}
-            autoDismiss="none">
+            autoDismiss="none"
+          >
             <div class="orbr-drawer-container">
               <div class="oj-flex-bar orbr-drawer-header">
                 <h6 class="oj-flex-bar-start">Event Settings</h6>
@@ -340,10 +332,12 @@ export function Content() {
                   display="icons"
                   chroming="borderless"
                   class="oj-flex-bar-end"
-                  onojAction={endToggle}>
+                  onojAction={endToggle}
+                >
                   <span
                     slot="startIcon"
-                    class="oj-ux-ico-close orbr-drawer-text-color"></span>
+                    class="oj-ux-ico-close orbr-drawer-text-color"
+                  ></span>
                   Close
                 </oj-button>
               </div>
@@ -353,12 +347,14 @@ export function Content() {
                     labelHint="Use browser locale"
                     labelEdge="inside"
                     value={locale}
-                    onvalueChanged={updateLocale}></oj-switch>
+                    onvalueChanged={updateLocale}
+                  ></oj-switch>
                   <oj-switch
                     labelHint="Auto-load schedule"
                     labelEdge="inside"
                     value={autoLoad}
-                    onvalueChanged={updateAutoLoad}></oj-switch>
+                    onvalueChanged={updateAutoLoad}
+                  ></oj-switch>
                 </oj-form-layout>
                 <h4>Select active event</h4>
                 <oj-list-view
@@ -367,11 +363,12 @@ export function Content() {
                   gridlines={{ item: "visibleExceptLast" }}
                   selected={selectedEvent}
                   onselectedChanged={selectedChangedHandler}
-                  onfirstSelectedItemChanged={firstSelectedItemChangedHandler}
-                  class="orbr-listview-sizing">
+                  class="orbr-listview-sizing"
+                >
                   <template
                     slot="itemTemplate"
-                    render={listItemTemplate}></template>
+                    render={listItemTemplate}
+                  ></template>
                   <template slot="noData" render={noDataTemplate}></template>
                 </oj-list-view>
 
@@ -385,7 +382,8 @@ export function Content() {
                     help={{
                       instruction: "Event names must not contain a dash (-)",
                     }}
-                    onvalueChanged={updateNameVal}></oj-input-text>
+                    onvalueChanged={updateNameVal}
+                  ></oj-input-text>
                   <oj-input-text
                     labelHint="Start time"
                     placeholder="YYYY-MM-DD HH:MM:SS"
@@ -395,10 +393,12 @@ export function Content() {
                     }}
                     value={startTimeVal}
                     clearIcon="conditional"
-                    onvalueChanged={updateStartTimeVal}></oj-input-text>
+                    onvalueChanged={updateStartTimeVal}
+                  ></oj-input-text>
                   <oj-button
                     onojAction={addEvent}
-                    label="Add event"></oj-button>
+                    label="Add event"
+                  ></oj-button>
                 </oj-form-layout>
                 <oj-form-layout class="oj-sm-margin-4x-top">
                   <h4>Import event schedule</h4>
@@ -411,10 +411,12 @@ export function Content() {
                       instruction:
                         'paste array of objects in the format of {"name":"my event", "startTime":"YYYY-MM-DDTHH:MM:SS"}',
                     }}
-                    onvalueChanged={updateScheduleVal}></oj-text-area>
+                    onvalueChanged={updateScheduleVal}
+                  ></oj-text-area>
                   <oj-button
                     onojAction={importSchedule}
-                    label="Import"></oj-button>
+                    label="Import"
+                  ></oj-button>
                 </oj-form-layout>
               </div>
             </div>

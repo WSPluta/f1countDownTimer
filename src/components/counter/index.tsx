@@ -12,8 +12,15 @@ type Props = {
   loadNext: () => void;
   autoLoad: boolean;
   currentTime: Date;
-  onTimeChange: (date: Date) => void;
 };
+
+interface date {
+  total: number;
+  days: string;
+  hours: string;
+  minutes: string;
+  seconds: string;
+}
 
 const getTimeRemaining = (targetTime, currentTime) => {
   const total =
@@ -42,17 +49,9 @@ const getTimeRemaining = (targetTime, currentTime) => {
 };
 
 export function Counter(props: Props) {
-  const initClock = useMemo(() => {
-    return getTimeRemaining(props.targetTime, props.currentTime);
-  }, [props.targetTime]);
-
-  const [hours, setHours] = useState<string>(initClock.hours.padStart(2, "0"));
-  const [minutes, setMinutes] = useState<string>(
-    initClock.minutes.padStart(2, "0")
-  );
-  const [seconds, setSeconds] = useState<string>(
-    initClock.seconds.padStart(2, "0")
-  );
+  const [hours, setHours] = useState<string>(null);
+  const [minutes, setMinutes] = useState<string>(null);
+  const [seconds, setSeconds] = useState<string>(null);
 
   useEffect(() => {
     if (props.currentTime) {

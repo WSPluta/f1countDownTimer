@@ -6,8 +6,9 @@ type Props = {
 };
 
 export function Time(props: Props) {
-  const formatDate = (data, timezone) => {
-    let dateObj = new Date(data);
+  const formatDate = (time, timezone) => {
+    const sec = time.getSeconds();
+    let dateObj = new Date(time);
     let options: Intl.DateTimeFormatOptions = {
       hour: "2-digit",
       minute: "2-digit",
@@ -15,7 +16,7 @@ export function Time(props: Props) {
       timeZone: timezone, // "Europe/Prague"
       hour12: false,
     };
-
+    dateObj.setSeconds(dateObj.getSeconds() + 1);
     return dateObj.toLocaleTimeString(navigator.language, options);
   };
 
@@ -37,7 +38,7 @@ export function Time(props: Props) {
           {formatDate(
             props.localTime,
             Intl.DateTimeFormat().resolvedOptions().timeZone
-          )}{" "}
+          )}
         </span>
       </div>
     </div>
