@@ -119,14 +119,18 @@ export function Content() {
   /** this state variable holds the master time for both countdown and local clock */
   const [timeNow, setTimeNow] = useState<Date>(new Date());
 
-  /** One timer with one setInterval controls the current time for the clock and countdown.
-   * This keeps the two timed events synchronized
-   */
+  const updateTime = (time) => {
+    setTimeNow(new Date(time))
+  }
 
-  useEffect(() => {
-    let timer = setInterval(() => setTimeNow(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
+  // /** One timer with one setInterval controls the current time for the clock and countdown.
+  //  * This keeps the two timed events synchronized
+  //  */
+
+  // useEffect(() => {
+  //   let timer = setInterval(() => setTimeNow(new Date()), 1000);
+  //   return () => clearInterval(timer);
+  // }, []);
 
   const endToggle = () => {
     endOpened ? setEndOpened(false) : setEndOpened(true);
@@ -321,7 +325,7 @@ export function Content() {
               loadNext={loadNextScheduleItem}
             />
             <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-time-text-hero-label">
-              <Time localTime={timeNow} />
+            <Time localTime={timeNow} onUpdate={updateTime} />
             </div>
           </div>
         </div>
