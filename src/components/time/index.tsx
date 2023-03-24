@@ -7,7 +7,6 @@ type Props = {
 
 export function Time(props: Props) {
   const formatDate = (time, timezone) => {
-    const sec = time.getSeconds();
     let dateObj = new Date(time);
     let options: Intl.DateTimeFormatOptions = {
       hour: "2-digit",
