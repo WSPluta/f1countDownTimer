@@ -7,22 +7,22 @@
 */
 
 :root {
-  --rbr-blue: #0D1F30;
-  --rbr-red: #ea1d2d;
-  --rbr-yellow: #fcd700;
-  --rbr-grey: #a8a9ac;
+  --custom-blue: #0D1F30;
+  --custom-red: #ea1d2d;
+  --custom-yellow: #fcd700;
+  --custom-grey: #a8a9ac;
 
-  --orbr-neutral20: #f5f4f2;
-  --orbr-neutral50: #d4cfca;
-  --orbr-ocean180: #13212c;
-  --orbr-ocean190: #0b171f;
-  --orbr-oracle: #c74634;
+  --custom-neutral20: #f5f4f2;
+  --custom-neutral50: #d4cfca;
+  --custom-ocean180: #13212c;
+  --custom-ocean190: #0b171f;
+  --custom-oracle: #c74634;
 
-  --ut-header-background-colour: var(--rbr-grey);
+  --ut-header-background-colour: var(--custom-oracle);
 
-  --oj-current-bg-color: var(--rbr-blue);
-  --oj-body-bg-color: var(--rbr-blue);
-  --oj-core-text-color-primary: var(--orbr-ocean190);
+  --oj-current-bg-color: var(--custom-blue);
+  --oj-body-bg-color: var(--custom-oracle);
+  --oj-core-text-color-primary: var(--custom-ocean190);
 }
 
 button.addbtn {
@@ -32,7 +32,7 @@ button.addbtn {
 .addbtn {
   width: 50px;
   height: 50px;
-  background-color: var(--orbr-oracle);
+  background-color: var(--custom-oracle);
 
   box-shadow: 0 6px 10px 0 #666;
 
@@ -68,7 +68,7 @@ button.addbtn2 {
 }
 
 .addbtn2 {
-  background-color: var(--rbr-blue);
+  background-color: var(--custom-oracle);
   transition: all 0.1s ease-in-out;
 }
 
@@ -98,11 +98,11 @@ button.addbtn2:focus-visible {
 }
 
 .orbr-clock-container {
-  color: var(--orbr-neutral20);
+  color: var(--custom-neutral20);
   text-align: center;
 }
 .orbr-event-container {
-  color: var(--orbr-neutral20);
+  color: var(--custom-neutral20);
   margin: auto;
   text-align: center;
 }
@@ -115,7 +115,7 @@ button.addbtn2:focus-visible {
 
 .p {
   font-style: italic;
-  color: var(--orbr-neutral20);
+  color: var(--custom-neutral20);
 }
 
 .orbr-event-panel {
@@ -126,7 +126,7 @@ button.addbtn2:focus-visible {
 }
 
 .orbr-video-container {
-  color: var(--orbr-neutral20);
+  color: var(--custom-neutral20);
   padding-bottom: 75px;
   width: 100%;
   min-height: 100vh;
@@ -141,7 +141,7 @@ button.addbtn2:focus-visible {
 
 .orbr-time-text-hero-label {
   font-size: calc(10px + 1.0vw);
-  color: var(--orbr-neutral20);
+  color: var(--custom-neutral20);
   letter-spacing: 0.1rem;
   text-transform: uppercase;
   font-family: sans-serif;
@@ -177,7 +177,7 @@ button.addbtn2:focus-visible {
 }
 
 .orbr-counter-text {
-  color: var(--orbr-neutral20);
+  color: var(--custom-neutral20);
   text-align: center;
   word-spacing: 1rem;
   font-size: calc(20px + 1.5vw);
@@ -186,7 +186,7 @@ button.addbtn2:focus-visible {
 }
 
 .orbr-counter-text-colon {
-  color: var(--orbr-neutral20);
+  color: var(--custom-neutral20);
   text-align: center;
   word-spacing: 1rem;
   font-size: calc(20px + 0.5vw);
@@ -206,11 +206,11 @@ button.addbtn2:focus-visible {
 }
 
 .orbr-event-text {
-  color: var(--orbr-neutral20);
+  color: var(--custom-neutral20);
 }
 
 .orbr-counter-label {
-  color: var(--orbr-neutral20);
+  color: var(--custom-neutral20);
   font-family: sans-serif;
   font-size: small;
 }
@@ -219,11 +219,11 @@ button.addbtn2:focus-visible {
 
 .orbr-tag-icon {
   width: 89%;
-  height: 89%;
+  height: 75%;
   margin: auto;
   padding-top: 10vh;
   margin-bottom: -70px;
-  content: url(images/TAG_Heuer_Logo.svg);
+  content: url(images/devrel.png);
 }
 
 .orbr-tag-icon:before {
