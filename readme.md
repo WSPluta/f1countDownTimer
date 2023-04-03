@@ -13,7 +13,7 @@
 - Create docker container:   
         `docker build -t clock .`  
 - Generate auth token:  
-        `oci iam auth-token create --description "garageClock" --user-id <paste user OCID> --query 'data.token' --raw-output`  
+        `oci iam auth-token create --description "DEFAULT" --user-id <paste user OCID> --query 'data.token' --raw-output`  
 - Echo your _namespace_:  
         `oci os ns get -c $OCI_TENANCY --query 'data' --raw-output`  
 - Login to your container registry - replace with xxx with your region  
@@ -27,7 +27,33 @@
         `docker push <paste yoy region>.ocir.io/<paste namespace>/clock:latest`
 
 ### Deploy Container Instance
-We will deploy our app using UI, but you can do using Cloud Shell
+We will deploy our app using UI, but you can do with Cloud Shell too.
+- Click on _hamburger menu_   
+        ![app home](doc/images/1hamburger.png)  
+- Click on _Developer Services_
+        ![app home](doc/images/2DeveloperServices.png)  
+- Click on _Container Instances_
+        ![app home](doc/images/3ContainerInstances.png)  
+- Click on _Create container instance_
+        ![app home](doc/images/4CreateContainerInstance.png)  
+- Add _Name_, choose _Compartment_, _Availability domain_, _Shape_, _Virtual cloud network_ and _Subnet_ ( we need to have TCP port 80 opened )
+        ![app home](doc/images/5AddBasicDetails.png)  
+- Click _Next_
+- In Image section click on _Select image_
+        ![app home](doc/images/6ConfigureContainers.png)  
+- Click on _Choose repository_ and select your container - if you cant find you image try changing the compartment to root
+- Pick _Image in repository_, in our case it is latest since this is how we tagged it in our docker push command
+        ![app home](doc/images/7SelectImage.png)  
+- Click on _Select image_
+- Click _Next_
+- Check your settings and click _Create_
+- Wait for your app to deploy
+- Once ready you can copy and paste public IP in your browser and voila your Container Instance is up and running
+        ![app home](doc/images/8Finish.png)  
+
+
+
+
 
 
 
