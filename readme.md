@@ -2,6 +2,13 @@
 
 ![app home](doc/images/appHome.png)
 
+
+- oci os ns get -c $OCI_TENANCY --query 'data' --raw-output
+- docker login xxx.ocir.io
+- docker build -t clock .
+- docker tag clock:latest phx.ocir.io/xxx/clock:latest
+- docker push phx.ocir.io/xxx/clock:latest
+
 ## Install
 1. For Development use homebrew or similar package manager to install Oracle JET `brew install --cask jet`
 1. Install Nodejs (latest LTS release would be recommended) From a terminal or command line window.
