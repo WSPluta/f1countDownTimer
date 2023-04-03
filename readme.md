@@ -1,13 +1,35 @@
-# Countdown Clock
+# Garage Clock
 
-![app home](doc/images/appHome.png)
+## Deploy Oracle JET app to the Container Instances
+![app home](doc/images/appHome.png)  
+
+### Compile and push your image  
+- Login to your account on cloud.oracle.com  
+- Open Cloud Shell  
+- Clone this repository with following command (TODO)  
+        `git clone -b CI https://github.com/WSPluta/f1countDownTimer.git`
+- Open your freshly cloned repository:  
+        `cd garageClock`  
+- Create docker container:   
+        `docker build -t clock .`  
+- Generate auth token:  
+        `oci iam auth-token create --description "garageClock" --user-id <paste user OCID> --query 'data.token' --raw-output`  
+- Echo your _namespace_:  
+        `oci os ns get -c $OCI_TENANCY --query 'data' --raw-output`  
+- Login to your container registry - replace with xxx with your region  
+        `docker login <paste yoy region>.ocir.io`  
+- Input your details  
+        Username:   
+        Password: `<paste auth token>`
+- Tag your container:  
+        `docker tag clock:latest <paste yoy region>.ocir.io/<paste namespace>/clock:latest`  
+- Push your image to the Container Registry:  
+        `docker push <paste yoy region>.ocir.io/<paste namespace>/clock:latest`
+
+### Deploy Container Instance
+We will deploy our app using UI, but you can do using Cloud Shell
 
 
-- oci os ns get -c $OCI_TENANCY --query 'data' --raw-output
-- docker login xxx.ocir.io
-- docker build -t clock .
-- docker tag clock:latest phx.ocir.io/xxx/clock:latest
-- docker push phx.ocir.io/xxx/clock:latest
 
 ## Install
 1. For Development use homebrew or similar package manager to install Oracle JET `brew install --cask jet`
@@ -16,9 +38,11 @@
 3. Unzip the countdown app into some empty folder
 4. From the root of that countdown app folder, `run http-server -o`  (that's a lower case o, not zero)
 
-## Run app
+## Run app for local development
 1. From root folder run `ojet restore` to install environment
 2. To start app run `ojet serve`
+
+## Package
 3. To distribute app run `ojet build --release`
 
 ### ojet restore help

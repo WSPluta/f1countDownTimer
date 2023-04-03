@@ -74,33 +74,33 @@ export function Counter(props: Props) {
     <div class="oj-typography-heading-2xl oj-sm-align-items-center oj-sm-justify-content-center">
       <div class="oj-flex oj-sm-12 oj-sm-justify-content-center">
         {/* 5 column panel for spacing */}
-        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center orbr-counter-text">
+        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center clock-drawer-header">
           {hours}
         </div>
-        <div class="oj-flex-item oj-sm-1 oj-sm-align-items-center orbr-counter-text-colon">
+        <div class="oj-flex-item oj-sm-1 oj-sm-align-items-center clock-drawer-header-colon">
           :
         </div>
-        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center orbr-counter-text">
+        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center clock-drawer-header">
           {minutes}
         </div>
-        <div class="oj-flex-item oj-sm-1 oj-sm-align-items-center orbr-counter-text-colon">
+        <div class="oj-flex-item oj-sm-1 oj-sm-align-items-center clock-drawer-header-colon">
           :
         </div>
-        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center orbr-counter-text">
+        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center clock-drawer-header">
           {seconds}
         </div>
       </div>
       <div class="oj-flex oj-sm-12 oj-sm-justify-content-center">
         {/* 5 column panel for spacing */}
-        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center orbr-counter-label">
+        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center clock-counter-label">
           HR
         </div>
-        <div class="oj-flex-item oj-sm-1 oj-sm-align-items-center orbr-counter-text"></div>
-        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center orbr-counter-label">
+        <div class="oj-flex-item oj-sm-1 oj-sm-align-items-center clock-drawer-header"></div>
+        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center clock-counter-label">
           MIN
         </div>
-        <div class="oj-flex-item oj-sm-1 oj-sm-align-items-center orbr-counter-label"></div>
-        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center orbr-counter-label">
+        <div class="oj-flex-item oj-sm-1 oj-sm-align-items-center clock-counter-label"></div>
+        <div class="oj-flex-item oj-sm-3 oj-sm-align-items-center clock-counter-label">
           SEC
         </div>
       </div>

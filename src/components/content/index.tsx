@@ -296,22 +296,22 @@ export function Content() {
 
   return (
     <>
-      <div class="oj-flex oj-sm-flex-direction-row oj-sm-12 orbr-content-container">
+      <div class="oj-flex oj-sm-flex-direction-row oj-sm-12 clock-content-container">
         {/* 4 column panel for times and event data */}
-        <div class="oj-flex-item oj-flex oj-sm-flex-direction-column oj-sm-4 oj-sm-margin-2x-left orbr-event-panel">
+        <div class="oj-flex-item oj-flex oj-sm-flex-direction-column oj-sm-4 oj-sm-margin-2x-left clock-event-panel">
           <div class="oj-flex-item oj-sm-align-items-center">
             <div
               role="img"
-              class="oj-flex oj-flex-item oj-icon orbr-tag-icon oj-sm-align-items-centre"
+              class="oj-flex oj-flex-item oj-icon clock-icon oj-sm-align-items-centre"
               title="Tag Heuer logo"
               alt="Tag Heuer logo"
             ></div>
           </div>
-          <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center oj-typography-heading-md orbr-event-container">
-            <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-time-text-label">
+          <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center oj-typography-heading-md clock-event-container">
+            <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center clock-time-text-label">
               COUNTDOWN TO:
             </div>
-            <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-time-text-hero-label">
+            <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center clock-time-text-hero-label">
               {name}
             </div>
             <Counter
@@ -320,7 +320,7 @@ export function Content() {
               autoLoad={autoLoad}
               loadNext={loadNextScheduleItem}
             />
-            <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center orbr-time-text-hero-label">
+            <div class="oj-flex-item oj-sm-flex-items-initial oj-sm-align-items-center clock-time-text-hero-label">
               <Time localTime={timeNow} />
             </div>
           </div>
@@ -329,14 +329,14 @@ export function Content() {
         {/* 8 column panel for video or other content */}
         <div class="oj-flex-item oj-sm-9">
           {/* Add content for the right side panel inside of the below <div> */}
-          <div class="oj-flex orbr-video-container"></div>
+          <div class="oj-flex clock-video-container"></div>
           <div class="oj-flex-item oj-typography-subheading-md oj-flex-bar oj-color-invert footer">
             <div class="oj-flex-bar-end">
               {/* <span class="o-text">POWERED BY</span> */}
               <button class="addbtn2" onClick={open}>
                 <div
                   role="img"
-                  class="oj-icon orbr-oracle-icon"
+                  class="oj-icon oracle-icon"
                   title="oracle logo"
                   alt="Oracle logo"
                 ></div>
@@ -347,13 +347,13 @@ export function Content() {
         <span>
           <oj-drawer-popup
             ref={drawerPopupRef}
-            class="orbr-drawer-end"
+            class="clock-drawer-end"
             edge="end"
             opened={endOpened}
             autoDismiss="none"
           >
-            <div class="orbr-drawer-container">
-              <div class="oj-flex-bar orbr-drawer-header">
+            <div class="clock-drawer-container">
+              <div class="oj-flex-bar clock-drawer-header">
                 <h6 class="oj-flex-bar-start">Event Settings</h6>
                 <oj-button
                   id="endButtonCloser"
@@ -364,12 +364,12 @@ export function Content() {
                 >
                   <span
                     slot="startIcon"
-                    class="oj-ux-ico-close orbr-drawer-text-color"
+                    class="oj-ux-ico-close"
                   ></span>
                   Close
                 </oj-button>
               </div>
-              <div class="orbr-drawer-content">
+              <div class="clock-drawer-header">
                 <oj-form-layout>
                   <oj-switch
                     labelHint="Use browser locale"
@@ -392,7 +392,7 @@ export function Content() {
                   gridlines={{ item: "visibleExceptLast" }}
                   selected={selectedEvent}
                   onselectedChanged={selectedChangedHandler}
-                  class="orbr-listview-sizing"
+                  class="clock-listview-sizing"
                 >
                   <template
                     slot="itemTemplate"

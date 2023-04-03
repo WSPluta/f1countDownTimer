@@ -20,20 +20,20 @@ export function Time(props: Props) {
   };
 
   return (
-    <div class="oj-flex oj-sm-flex-direction-column oj-typography-subheading-xl oj-sm-align-items-start orbr-time-text">
+    <div class="oj-flex oj-sm-flex-direction-column oj-typography-subheading-xl oj-sm-align-items-start clock-time-text">
       <div class="oj-flex">
         <div
           role="img"
-          class="oj-flex oj-flex-item oj-icon oj-sm-align-items-centre orbr-line-icon"
+          class="oj-flex oj-flex-item oj-icon oj-sm-align-items-centre line-icon"
           title="line"
           alt="lineBreak"
         ></div>
       </div>
       <div class="oj-flex-item">
-        <span class="orbr-time-text-label2"> LOCAL TIME: </span>
+        <span class="clock-time-text-label2"> LOCAL TIME: </span>
       </div>
       <div class="oj-flex-item">
-        <span class="orbr-time-text-clock">
+        <span class="clock-time-text-clock">
           {formatDate(
             props.localTime,
             Intl.DateTimeFormat().resolvedOptions().timeZone
